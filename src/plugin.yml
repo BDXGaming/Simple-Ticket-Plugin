@@ -1,0 +1,28 @@
+name: Simple-Ticket
+version: 1.0
+author: BD
+main: com.ticket.SimpleTicket
+api-version: 1.16
+
+commands:
+  newticket:
+    description: Opens a Ticket
+    usage: /<command>
+    aliases: [ntick, nt]
+
+  tickets:
+    description: shows all tickets
+    usage: /<command>
+    aliases: [listtickets]
+
+  ticket:
+    description: Send messages in tickets
+    usage: /<command> <message/args>
+    aliases: [tr]
+
+permissions:
+  ticket.*:
+    description: Permissions for Simple Ticket
+    children:
+      ticket.ticket: true
+      ticket.ticket.staff: true
