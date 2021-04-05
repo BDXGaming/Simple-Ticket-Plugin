@@ -1,4 +1,5 @@
 package com.ticket.commands;
+import com.ticket.files.SimpleTicketConfig;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ public class Ticket{
     private static ArrayList<Ticket> tickets = new ArrayList<>();
     private static ArrayList<Player> players_with_tickets = new ArrayList<>();
     private static int ticket_count = 0;
-    private String ticketLog = " \n§e Ticket Message History\n§e Welcome to your ticket, to reply type /tr then your message!";
+    private String ticketLog = SimpleTicketConfig.get().getString("FirstMessage");
 
     public Ticket(Player player){
         ticket_count += 1;
