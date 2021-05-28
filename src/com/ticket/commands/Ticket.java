@@ -77,11 +77,6 @@ public class Ticket{
 
     public void deleteTicket(){
         removeTicket(this);
-//        this.owner = null;
-//        this.num = 0;
-//        this.claimed = null;
-//        this.staffClaimer = null;
-//        this.ticketLog = null;
     }
 
     public static Boolean hasTicket(Player p){
