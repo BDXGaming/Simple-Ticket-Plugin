@@ -12,9 +12,9 @@ public class SimpleTicketConfig {
     private static File file;
     private static FileConfiguration customfile;
 
-    //Finds or generates config file
+    //Finds or generates config file thing
     public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder(), "ticketconfig.yml");
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder(), "config.yml");
 
         if(!(file.exists())){
             try{
