@@ -3,11 +3,13 @@ package com.ticket.commands;
 import com.ticket.commands.Ticket;
 import com.ticket.files.SimpleTicketConfig;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SimpleTicketNewTicket implements CommandExecutor {
 
@@ -38,7 +40,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                 if (!(Ticket.hasTicket(player))) {
                     Ticket t = new Ticket(player);
 
-                    player.sendMessage(SimpleTicketConfig.get().getString("FirstMessage"));
+                    player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
                     getStaff();
                     for (Player p : staff) {
                         p.sendMessage(player.getDisplayName() + " §c Has Opened Ticket-"+t.getNum());
@@ -49,6 +51,9 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                     player.sendMessage("§cYou already have an open ticket!");
                     return true;
                 }
+            }
+            else{
+                player.sendMessage(ChatColor.RED+"You do not have the permissions to use this command!");
             }
         }
 
