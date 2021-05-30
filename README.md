@@ -8,10 +8,9 @@ To setup this plugin download the .jar from the spigot page. Put this plugin int
 
 ## Commands
 There are only 4 commands within the entire plugin. Below are the commands and what they do.
-- /ticket <claim, close, delete> <ticket number>
-- /newticket
-- /treload
-- /tickets : Shows a list of all open tickets and the name of the user who opened the ticket.
-
+- /ticket (claim, close, delete) (ticket number) : aliases (tr)
+- /newticket : aliases (nt, ntick)
+- /treload aliases (ticketreload)
+- /tickets : aliases (listtickets)
 ## Status
 - This plugin is still in development and will have many new features in the near future
