@@ -13,18 +13,26 @@ public class SimpleTicket extends JavaPlugin{
     @Override
     public void onEnable(){
 
+        //The classes that are used in the commandExecuters
+        SimpleTicketNewTicket nt = new SimpleTicketNewTicket();
+        SimpleTicketsTicket tic = new SimpleTicketsTicket();
+
+        //This sets up the config file the first time that the plugin is run
         SimpleTicketConfig.setup();
         SimpleTicketConfig.get().addDefault("FirstMessage"," \n§e Ticket Message History\n§e Welcome to your ticket, to reply type /tr then your message!");
         SimpleTicketConfig.get().options().copyDefaults(true);
         SimpleTicketConfig.save();
 
-        SimpleTicketNewTicket nt = new SimpleTicketNewTicket();
-        SimpleTicketsTicket tic = new SimpleTicketsTicket();
+        //All the commands are assigned executors here
         getCommand("ticket").setExecutor(tic);
         getCommand("tickets").setExecutor(tic);
         getCommand("newticket").setExecutor(nt);
         getCommand("treload").setExecutor(new SimpleTicketReload());
+
+        //The tab complete for the ticket command
         getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());
+
+        //Showing that the plugin is enabled
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN +"[Simple Ticket] Plugin is enabled");
 
     }//Closes the onEnable
@@ -32,6 +40,10 @@ public class SimpleTicket extends JavaPlugin{
 
     @Override
     public void onDisable(){
+
+        //Prints a message to console when the plugin is disabled
         getServer().getConsoleSender().sendMessage(ChatColor.RED +"[Simple Ticket] Plugin is disabled");
+
     }//Closes onDisable
+
 }
