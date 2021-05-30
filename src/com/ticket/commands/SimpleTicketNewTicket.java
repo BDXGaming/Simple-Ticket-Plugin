@@ -1,6 +1,7 @@
 package com.ticket.commands;
 
 import com.ticket.commands.Ticket;
+import com.ticket.files.SimpleTicketConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,7 +38,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                 if (!(Ticket.hasTicket(player))) {
                     Ticket t = new Ticket(player);
 
-                    player.sendMessage("§eWelcome to your ticket, to reply type /tr then your message!");
+                    player.sendMessage(SimpleTicketConfig.get().getString("FirstMessage"));
                     getStaff();
                     for (Player p : staff) {
                         p.sendMessage(player.getDisplayName() + " §c Has Opened Ticket-"+t.getNum());
@@ -46,10 +47,11 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                 }
                 else{
                     player.sendMessage("§cYou already have an open ticket!");
+                    return true;
                 }
             }
         }
 
-        return true;
+        return false;
     }
 }

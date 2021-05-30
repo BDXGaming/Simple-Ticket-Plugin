@@ -12,6 +12,7 @@ public class Ticket{
     private Player staffClaimer;
     private static ArrayList<Ticket> tickets = new ArrayList<>();
     private static ArrayList<Player> players_with_tickets = new ArrayList<>();
+    private static ArrayList<Player> staff_with_tickets = new ArrayList<>();
     private static int ticket_count = 0;
     private String ticketLog = SimpleTicketConfig.get().getString("FirstMessage");
 
@@ -22,6 +23,10 @@ public class Ticket{
         players_with_tickets.add(player);
         this.claimed = false;
         tickets.add(this);
+    }
+
+    public String toString(){
+        return num.toString();
     }
 
     public Integer getNum(){
@@ -39,6 +44,7 @@ public class Ticket{
     public void claimTicket(Player player){
         claimed = true;
         staffClaimer = player;
+        staff_with_tickets.add(player);
     }
 
     public void addmsg(String msg){
@@ -76,6 +82,7 @@ public class Ticket{
     }
 
     public void deleteTicket(){
+        staff_with_tickets.remove(staffClaimer);
         removeTicket(this);
     }
 
@@ -129,5 +136,14 @@ public class Ticket{
             players_with_tickets.remove(remove);
         }
     }
+
+    public static ArrayList<Player> getStaffWithTickets(){
+        return staff_with_tickets;
+    }
+
+    public static ArrayList<Ticket> getTickets(){
+        return tickets;
+    }
+
 
 }

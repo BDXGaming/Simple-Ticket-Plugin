@@ -3,6 +3,7 @@ import com.ticket.commands.SimpleTicketNewTicket;
 import com.ticket.commands.SimpleTicketReload;
 import com.ticket.commands.SimpleTicketsTicket;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.tabcomplete.SimpleTicketTabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +24,7 @@ public class SimpleTicket extends JavaPlugin{
         getCommand("tickets").setExecutor(tic);
         getCommand("newticket").setExecutor(nt);
         getCommand("treload").setExecutor(new SimpleTicketReload());
+        getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN +"[Simple Ticket] Plugin is enabled");
 
     }//Closes the onEnable

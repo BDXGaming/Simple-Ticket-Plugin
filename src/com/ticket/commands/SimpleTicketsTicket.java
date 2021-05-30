@@ -1,12 +1,15 @@
 package com.ticket.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class SimpleTicketsTicket implements CommandExecutor {
 
@@ -45,14 +48,19 @@ public class SimpleTicketsTicket implements CommandExecutor {
                 if(player.hasPermission("ticket.ticket.staff")){
 
                     if(args[0].equalsIgnoreCase("claim")){
-                        Ticket t = Ticket.getTicket(args[1]);
-                        assert t != null;
-                        if(!(t.isClaimed())) {
-                            t.claimTicket(player);
-                            player.sendMessage("§aClaimed Ticket-" + t.getNum());
+                        ArrayList<Player> staff_tickets = Ticket.getStaffWithTickets();
+                        if (!staff_tickets.contains(player)){
+                            Ticket t = Ticket.getTicket(args[1]);
+                            assert t != null;
+                            if (!(t.isClaimed())) {
+                                t.claimTicket(player);
+                                player.sendMessage("§aClaimed Ticket-" + t.getNum());
+                            } else {
+                                player.sendMessage("§cThis ticket is already claimed by: " + t.getStaffClaimer().getDisplayName());
+                            }
                         }
                         else{
-                            player.sendMessage("§cThis ticket is already claimed by: "+ t.getStaffClaimer().getDisplayName());
+                            player.sendMessage(ChatColor.YELLOW + "You cannot claim more than one ticket at a time!");
                         }
                     }
 
@@ -60,13 +68,19 @@ public class SimpleTicketsTicket implements CommandExecutor {
                     else if(args[0].equalsIgnoreCase("close")){
                         Ticket t = Ticket.getTicket(args[1]);
                         player.sendMessage("§c[Ticket-" + args[1] +"]§c§l Deleted");
-                        t.deleteTicket();
+                        if (t != null) {
+                            t.deleteTicket();
+                        }
                     }
 
                     //To view all the previous messages sent in the ticket both by staff and the player
                     else if((args[0].equalsIgnoreCase("history")) || (args[0].equalsIgnoreCase("hist"))){
-                        Ticket t = Ticket.getTicket(args[1]);
-                        player.sendMessage(t.getMsgLog());
+                        try {
+                            Ticket t = Ticket.getTicket(args[1]);
+                            player.sendMessage(t.getMsgLog());
+                        }catch (NullPointerException e){
+                            player.sendMessage(ChatColor.RED + "There are no open tickets at this time!");
+                        }
                     }
 
                     else if(Ticket.hasClaim(player)){
@@ -109,4 +123,6 @@ public class SimpleTicketsTicket implements CommandExecutor {
         }
         return true;
     }
+
+
 }
