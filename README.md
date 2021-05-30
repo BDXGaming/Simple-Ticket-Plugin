@@ -18,5 +18,11 @@ This plugin uses the displayname of the user, so it works with both rank prefixe
 ![Screenshot](Images/message1.png)
 ![Screenshot](Images/message2.png)
 
+## Permissions
+There are only three permissions for the plugin. This is part of keeping the plugin simple and easy to use. 
+- ticket.ticket.staff : This is the staff permission node and allows for the claiming, history, and close subcommands to be used. It also allows the /tickets to be used.
+- ticket.ticket : This allows people to open new tickets and respond to their ticket (use of /newticket and /ticket) 
+- ticket.ticket.reload : This allows for the config file to be reloaded
+
 ## Status
 - This plugin is still in development and will have many new features in the near future
