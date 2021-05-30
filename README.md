@@ -15,7 +15,7 @@ There are only 4 commands within the entire plugin. Below are the commands and w
 
 ## Compatability
 This plugin uses the displayname of the user, so it works with both rank prefixes and with colored nicknames. This means that any staff/moderators that may use this plugin could keep their displaynamees so players could be certain that they are speaking with staff.
-![Screenshot](plugin images/list.png)
+![Screenshot](Images/list.png)
 
 ## Status
 - This plugin is still in development and will have many new features in the near future
