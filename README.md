@@ -14,7 +14,7 @@ There are only 4 commands within the entire plugin. Below are the commands and w
 - /tickets : aliases (listtickets)
 
 ## Compatability
-This plugin uses the displayname of the user, so it works with both rank prefixes and with colored nicknames. This means that any staff/moderators that may use this plugin could keep their displaynamees so players could be certain that they are speaking with staff.
+This plugin uses the displayname of the user, so it works with both rank prefixes and with colored nicknames. This means that any staff/moderators that may use this plugin could keep their displaynames so players could be certain that they are speaking with staff.
 ![Screenshot](Images/message1.png)
 ![Screenshot](Images/message2.png)
 
