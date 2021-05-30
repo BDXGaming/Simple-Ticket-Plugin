@@ -1,6 +1,7 @@
 package com.ticket.files;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -20,7 +21,7 @@ public class SimpleTicketConfig {
             try{
                 file.createNewFile();
             }catch (IOException e){
-                //naa
+                System.out.println(ChatColor.YELLOW + "[Simple-Ticket]: "+ e.toString());
             }
         }
         customfile = YamlConfiguration.loadConfiguration(file);
