@@ -8,10 +8,20 @@ To setup this plugin download the .jar from the spigot page. Put this plugin int
 
 ## Commands
 There are only 4 commands within the entire plugin. Below are the commands and what they do. As usual there is tab complete on the command with args. 
-- /ticket (claim, close, delete) (ticket number) : aliases (tr)
-- /newticket : aliases (nt, ntick)
-- /treload aliases (ticketreload)
-- /tickets : aliases (listtickets)
+
+### /ticket (claim, close, delete) (ticket number) : aliases (tr)
+- The main command of the plugin. The subcommands are used by ticket.ticket.staff and otherwise the command usage is /ticket (message) as this replies to your currently open ticket.
+![Screenshot](Images/history.png)
+
+### /newticket : aliases (nt, ntick)
+- allows a user to open a new ticket, will also send the below alert broadcast to all those with ticket.ticket.staff
+![Screenshot](Images/alert.png)
+
+### /treload aliases (ticketreload)
+- Pretty much what the name says, reloads the config files of the plugin
+
+### /tickets : aliases (listtickets)
+![Screenshot](Images/list.png)
 
 ## Compatability
 This plugin uses the displayname of the user, so it works with both rank prefixes and with colored nicknames. This means that any staff/moderators that may use this plugin could keep their displaynames so players could be certain that they are speaking with staff.
