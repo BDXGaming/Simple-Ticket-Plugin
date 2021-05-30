@@ -15,7 +15,11 @@ There are only 4 commands within the entire plugin. Below are the commands and w
 
 ## Compatability
 This plugin uses the displayname of the user, so it works with both rank prefixes and with colored nicknames. This means that any staff/moderators that may use this plugin could keep their displaynames so players could be certain that they are speaking with staff.
+
+### Showcase of server with no changes to displayname
 ![Screenshot](Images/message1.png)
+
+### Showcase of server with chat prefixes and different displaynames
 ![Screenshot](Images/message2.png)
 
 ## Permissions
