@@ -21,6 +21,7 @@ There are only 4 commands within the entire plugin. Below are the commands and w
 - Pretty much what the name says, reloads the config files of the plugin
 
 ### /tickets : aliases (listtickets)
+- Sends a list of all currently open tickets. The ticket.ticket.staff permission is needed to use this command.
 ![Screenshot](Images/list.png)
 
 ## Compatability
