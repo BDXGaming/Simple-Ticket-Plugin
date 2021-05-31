@@ -104,38 +104,39 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 return true;
                             }
                             return true;
-                        }else {
-                            try {
-                                if (Ticket.hasTicket(player)) {
-                                    Ticket t = Ticket.getTicket(player);
-                                    StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a(" + player.getDisplayName() + "§a)§d ");
-                                    for (int i = 0; i < args.length; i++) {
-                                        msg.append(args[i]).append(" ");
-                                    }
-                                    if (!(t.isClaimed())) {
-                                        for (Player s : staff) {
-                                            s.sendMessage(msg.toString());
-                                            player.sendMessage(msg.toString());
-                                            t.addmsg(msg.toString());
-                                        }
-                                        return true;
-                                    } else {
-                                        Player staff = t.getStaffClaimer();
-                                        staff.sendMessage(msg.toString());
-                                        player.sendMessage(msg.toString());
-                                        t.addmsg(msg.toString());
-                                        return true;
-                                    }
-                                } else {
-                                    player.sendMessage("§cYou do not have an open ticket!");
-                                    return true;
-                                }
-                            } catch (ArrayIndexOutOfBoundsException e) {
-                                return false;
-                            }
                         }
                     }
                     else{
+                        return false;
+                    }
+                }
+                else {
+                    try {
+                        if (Ticket.hasTicket(player)) {
+                            Ticket t = Ticket.getTicket(player);
+                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a(" + player.getDisplayName() + "§a)§d ");
+                            for (int i = 0; i < args.length; i++) {
+                                msg.append(args[i]).append(" ");
+                            }
+                            if (!(t.isClaimed())) {
+                                for (Player s : staff) {
+                                    s.sendMessage(msg.toString());
+                                    player.sendMessage(msg.toString());
+                                    t.addmsg(msg.toString());
+                                }
+                                return true;
+                            } else {
+                                Player staff = t.getStaffClaimer();
+                                staff.sendMessage(msg.toString());
+                                player.sendMessage(msg.toString());
+                                t.addmsg(msg.toString());
+                                return true;
+                            }
+                        } else {
+                            player.sendMessage("§cYou do not have an open ticket!");
+                            return true;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         return false;
                     }
                 }
