@@ -13,7 +13,6 @@ public class SimpleTicketTabComplete implements TabCompleter {
 
     private String[] subcommands = {"claim", "close", "history"};
 
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args){
         if(cmd.getName().equalsIgnoreCase("ticket")){
