@@ -1,8 +1,6 @@
-package com.ticket.commands;
-import com.ticket.files.SimpleTicketConfig;
+package com.ticket.files;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Ticket{
 

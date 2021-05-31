@@ -1,6 +1,6 @@
 package com.ticket.tabcomplete;
 
-import com.ticket.commands.Ticket;
+import com.ticket.files.Ticket;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
