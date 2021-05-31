@@ -1,10 +1,11 @@
 name: Simple-Ticket
 version: 1.0
-author: BD
+author: BDX
 main: com.ticket.SimpleTicket
 api-version: 1.16
 
 commands:
+
   newticket:
     description: Opens a Ticket
     usage: /<command>
@@ -19,6 +20,7 @@ commands:
     description: Send messages in tickets
     usage: /<command> <message/args>
     aliases: [tr]
+
   treload:
     description: Reloads the Simple-Ticket config file settings
     usage: /<command>
@@ -26,7 +28,7 @@ commands:
 
 permissions:
   ticket.*:
-    description: Permissions for Simple Ticket
+    description: Permissions for Simple-Ticket
     children:
       ticket.ticket: true
       ticket.ticket.staff: true
