@@ -1,6 +1,5 @@
 package com.ticket.commands;
 
-import com.ticket.commands.Ticket;
 import com.ticket.files.SimpleTicketConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
