@@ -1,4 +1,4 @@
-# Simple-Ticket-Plugin
+# Simple-Ticket-Plugin (Pre Release)
 
 ## Purpose
 This plugin is designed to take the complexity out of Minecraft in-game ticketing! With this plugin all you have to do is drop it into the plugins folder and configure the three permission nodes. The goal of the plugin was to avoid the clutter and the complexity of other ticketing solutions. Rather this plugin takes out the complexity only having a few simple and easy to use commands!
