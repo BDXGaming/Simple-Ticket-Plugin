@@ -25,6 +25,12 @@ There are only 4 commands within the entire plugin. Below are the commands and w
 - Sends a list of all currently open tickets. The ticket.ticket.staff permission is needed to use this command.
 ![list](https://user-images.githubusercontent.com/74644043/120880249-2a93e080-c597-11eb-9c9e-1cab44c4214e.png)
 
+### /tpunish <user> <duration (in seconds)>
+- Prevents users from opening tickets for the duration provided 
+  
+### /tunpunish <user>
+- Allows a previously punished user to once again open tickets 
+
 
 ## Compatability
 This plugin uses the displayname of the user, so it works with both rank prefixes and with colored nicknames. This means that any staff/moderators that may use this plugin could keep their displaynames so players could be certain that they are speaking with staff.
