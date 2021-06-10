@@ -26,6 +26,8 @@ public class Punishment {
         this.staff = staff;
         this.duration = duration;
 
+        System.out.println(duration);
+
         playersPunished = new ArrayList<UUID>();
         playersPunished.add(player.getUniqueId());
 

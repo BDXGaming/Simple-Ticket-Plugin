@@ -58,7 +58,15 @@ public class PunishmentDatabase {
                 FileConfiguration user = YamlConfiguration.loadConfiguration(file);
 
                 LocalDateTime myDateObj = LocalDateTime.now();
-                LocalDateTime timeExpired = myDateObj.plusSeconds(duration);
+
+                LocalDateTime timeExpired;
+
+                if(duration >=86400){
+                     timeExpired = myDateObj.plusDays(duration/(24*3600));
+                }
+                else {
+                     timeExpired = myDateObj.plusSeconds(duration);
+                }
 
                 String addsql = "INSERT INTO punishments(UUID, name, duration, staffName, time) VALUES(?,?,?,?,?)";
 
