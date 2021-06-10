@@ -28,6 +28,7 @@ public class SimpleTicket extends JavaPlugin{
         //This sets up the config file the first time that the plugin is run
         SimpleTicketConfig.setup();
         SimpleTicketConfig.get().addDefault("FirstMessage"," \n§e Ticket Message History\n§e Welcome to your ticket, to reply type /tr then your message!");
+        SimpleTicketConfig.get().addDefault("Default Duration", 3200);
         SimpleTicketConfig.get().options().copyDefaults(true);
         SimpleTicketConfig.save();
 

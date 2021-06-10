@@ -1,5 +1,6 @@
 package com.ticket.punishment;
 
+import com.ticket.files.SimpleTicketConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,8 +25,8 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                             Punishment punishment = new Punishment(p, Integer.parseInt(args[1]), player);
                             player.sendMessage(p.getDisplayName() + ChatColor.GREEN + " has been blocked from opening tickets for " + args[1]);
                         } else {
-                            Punishment punishment = new Punishment(p, 3600, player);
-                            player.sendMessage(p.getDisplayName() + ChatColor.GREEN + " has been blocked from opening tickets for 3600");
+                            Punishment punishment = new Punishment(p, SimpleTicketConfig.get().getInt("Default Duration"), player);
+                            player.sendMessage(p.getDisplayName() + ChatColor.GREEN + " has been blocked from opening tickets for "+SimpleTicketConfig.get().getInt("Default Duration"));
                         }
                     }else{
                         player.sendMessage(ChatColor.YELLOW+p.getDisplayName()+ChatColor.YELLOW+" already cannot open tickets!");
