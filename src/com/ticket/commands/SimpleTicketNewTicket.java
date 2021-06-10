@@ -2,6 +2,8 @@ package com.ticket.commands;
 
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.Ticket;
+import com.ticket.punishment.Punishment;
+import com.ticket.punishment.PunishmentDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class SimpleTicketNewTicket implements CommandExecutor {
 
@@ -28,6 +31,8 @@ public class SimpleTicketNewTicket implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
+        Punishment.checkPunishedPlayers();
+
         if (!(sender instanceof Player)){
             sender.sendMessage("Only Players can use this command");
             return true;
@@ -37,18 +42,24 @@ public class SimpleTicketNewTicket implements CommandExecutor {
 
         if (cmd.getName().equalsIgnoreCase("newticket")) {
             if (player.hasPermission("ticket.ticket")) {
-                if (!(Ticket.hasTicket(player))) {
-                    Ticket t = new Ticket(player);
+                ArrayList<UUID> playersPunished = Punishment.getPunishedPlayers();
+                if(!(playersPunished.contains(player.getUniqueId()))) {
+                    if (!(Ticket.hasTicket(player))) {
+                        Ticket t = new Ticket(player);
 
-                    player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                    getStaff();
-                    for (Player p : staff) {
-                        p.sendMessage(player.getDisplayName() + " §c Has Opened Ticket-"+t.getNum());
+                        player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
+                        getStaff();
+                        for (Player p : staff) {
+                            p.sendMessage(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum());
+                        }
+                        return true;
+                    } else {
+                        player.sendMessage("§cYou already have an open ticket!");
+                        return true;
                     }
-                    return true;
                 }
                 else{
-                    player.sendMessage("§cYou already have an open ticket!");
+                    player.sendMessage(ChatColor.RED + "You are currently blocked from opening tickets!");
                     return true;
                 }
             }

@@ -26,6 +26,16 @@ commands:
     usage: /<command>
     aliases: [ticketreload]
 
+  tpunish:
+    description: This command blocks a user from opening tickets for the given time
+    usage: /<command> <player> <duration>
+    aliases: [tban, tblock]
+
+  tunpunish:
+    description: This allows a punished member to open tickets again
+    usage: /<command> <player>
+    aliases: [tunmute, tunban, tfree]
+
 permissions:
   ticket.*:
     description: Permissions for Simple-Ticket

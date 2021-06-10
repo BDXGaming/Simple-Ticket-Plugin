@@ -3,15 +3,23 @@ import com.ticket.commands.SimpleTicketNewTicket;
 import com.ticket.commands.SimpleTicketReload;
 import com.ticket.commands.SimpleTicketsTicket;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.punishment.Punishment;
+import com.ticket.punishment.RemovePunishment;
+import com.ticket.punishment.SimpleTicketPunishCommand;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.SQLException;
 
 
 public class SimpleTicket extends JavaPlugin{
 
     @Override
     public void onEnable(){
+
+        //Checks for users who need to be removed from the active moderations list
+        Punishment.checkPunishedPlayers();
 
         //The classes that are used in the commandExecuters
         SimpleTicketNewTicket nt = new SimpleTicketNewTicket();
@@ -28,6 +36,9 @@ public class SimpleTicket extends JavaPlugin{
         getCommand("tickets").setExecutor(tic);
         getCommand("newticket").setExecutor(nt);
         getCommand("treload").setExecutor(new SimpleTicketReload());
+        getCommand("tpunish").setExecutor(new SimpleTicketPunishCommand());
+        getCommand("tunpunish").setExecutor(new RemovePunishment());
+
 
         //The tab complete for the ticket command
         getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());
