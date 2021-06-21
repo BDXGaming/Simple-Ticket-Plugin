@@ -7,7 +7,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
@@ -18,16 +17,20 @@ public class PlayerPunishmentHistoryCommand implements CommandExecutor {
         if(sender.hasPermission("ticket.ticket.staff")){
 
             if(args.length >=0){
-                OfflinePlayer p =  Bukkit.getOfflinePlayer(args[0]);
+                try {
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
 
-                if(p.getUniqueId() != null){
+                    p.getUniqueId();
                     ArrayList<String> hist = PunishmentDatabase.getPlayerHist(p.getUniqueId());
                     assert hist != null;
-                    String strHist = "";
-                    for(String h: hist){
-                        strHist += h+"\n \n";
+                    StringBuilder strHist = new StringBuilder();
+                    for (String h : hist) {
+                        strHist.append(h).append("\n \n");
                     }
-                    sender.sendMessage(ChatColor.YELLOW + "\nSimpleTicket Punishment History\n \n"+ChatColor.GREEN +strHist+"\n \n");
+                    sender.sendMessage(ChatColor.YELLOW + "\nSimpleTicket Punishment History\n \n" + ChatColor.GREEN + strHist + "\n \n");
+                    return true;
+                }catch (ArrayIndexOutOfBoundsException e){
+                    sender.sendMessage(ChatColor.YELLOW + "Please use the following format /"+label+" <player>");
                     return true;
                 }
 
