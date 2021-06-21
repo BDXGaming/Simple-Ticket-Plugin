@@ -7,6 +7,7 @@ import com.ticket.commands.PlayerPunishmentHistoryCommand;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.RemovePunishment;
 import com.ticket.commands.SimpleTicketPunishCommand;
+import com.ticket.commands.ViewActivePunishmentCommands;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,6 +40,7 @@ public class SimpleTicket extends JavaPlugin{
         getCommand("tpunish").setExecutor(new SimpleTicketPunishCommand());
         getCommand("tunpunish").setExecutor(new RemovePunishment());
         getCommand("thist").setExecutor(new PlayerPunishmentHistoryCommand());
+        getCommand("viewpunishments").setExecutor(new ViewActivePunishmentCommands());
 
         //The tab complete for the ticket command
         getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());

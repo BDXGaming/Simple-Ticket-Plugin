@@ -41,6 +41,11 @@ commands:
     usage: /<command> <player>
     aliases: [thistory]
 
+  viewpunishments:
+    description: This shows the names of all players who are currently punished
+    usage: /<command>
+    aliases: [tactivepunishments, tlive]
+
 permissions:
   ticket.*:
     description: Permissions for Simple-Ticket

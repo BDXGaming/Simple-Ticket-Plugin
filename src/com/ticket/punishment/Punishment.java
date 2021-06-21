@@ -23,13 +23,7 @@ public class Punishment {
         playersPunished = new ArrayList<UUID>();
         playersPunished.add(player.getUniqueId());
 
-
         PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff);
-
-//        Timer timer = new Timer();
-//        TimerTask tt = new
-//        timer.schedule(tt, duration);
-
     }
 
     public static void removePunishedPlayer(Player p){
