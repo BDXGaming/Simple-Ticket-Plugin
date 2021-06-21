@@ -36,6 +36,11 @@ commands:
     usage: /<command> <player>
     aliases: [tunmute, tunban, tfree]
 
+  thist:
+    description: This command shows the Simple-Ticket punishment history of a user
+    usage: /<command> <player>
+    aliases: [thistory]
+
 permissions:
   ticket.*:
     description: Permissions for Simple-Ticket

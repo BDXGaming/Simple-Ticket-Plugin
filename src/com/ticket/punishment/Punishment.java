@@ -1,15 +1,7 @@
 package com.ticket.punishment;
 
 import org.bukkit.entity.Player;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 public class Punishment {
@@ -37,7 +29,6 @@ public class Punishment {
 //        Timer timer = new Timer();
 //        TimerTask tt = new
 //        timer.schedule(tt, duration);
-
 
     }
 

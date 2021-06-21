@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
 import javax.swing.plaf.DimensionUIResource;
 import javax.xml.transform.Result;
 import java.io.File;
@@ -166,6 +165,41 @@ public class PunishmentDatabase {
 
 
         return playersToRemove;
+    }
+
+    public static ArrayList<String> getPlayerHist(UUID uuid){
+        File dir = Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder();
+        String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
+        ArrayList<String> hist = new ArrayList<>();
+
+        try(Connection conn = DriverManager.getConnection(location)){
+
+
+
+            if(conn != null){
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM punishments WHERE UUID = ?");
+                stmt.setString(1, uuid.toString());
+
+                ResultSet rs = stmt.executeQuery();
+
+                while(rs.next()){
+                    String res;
+                    res = "Name: " + rs.getString("name") + "\nDuration: " + rs.getInt("duration") + "\n" + "Staff: " + rs.getString("staffName");
+                    hist.add(res);
+                }
+
+                rs.close();
+                stmt.close();
+                conn.close();
+
+                return hist;
+            }
+        }catch (SQLException e){
+            System.out.println("[Simple-Ticket] SQL ERROR "+ e);
+            hist.add("DB Error");
+            return hist;
+        }
+        return null;
     }
 
 }

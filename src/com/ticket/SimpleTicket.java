@@ -3,14 +3,13 @@ import com.ticket.commands.SimpleTicketNewTicket;
 import com.ticket.commands.SimpleTicketReload;
 import com.ticket.commands.SimpleTicketsTicket;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.commands.PlayerPunishmentHistoryCommand;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.RemovePunishment;
-import com.ticket.punishment.SimpleTicketPunishCommand;
+import com.ticket.commands.SimpleTicketPunishCommand;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.sql.SQLException;
 
 
 public class SimpleTicket extends JavaPlugin{
@@ -39,7 +38,7 @@ public class SimpleTicket extends JavaPlugin{
         getCommand("treload").setExecutor(new SimpleTicketReload());
         getCommand("tpunish").setExecutor(new SimpleTicketPunishCommand());
         getCommand("tunpunish").setExecutor(new RemovePunishment());
-
+        getCommand("thist").setExecutor(new PlayerPunishmentHistoryCommand());
 
         //The tab complete for the ticket command
         getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());
