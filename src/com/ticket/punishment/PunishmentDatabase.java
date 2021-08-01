@@ -5,22 +5,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import javax.swing.plaf.DimensionUIResource;
-import javax.xml.transform.Result;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PunishmentDatabase {
 
     public static void punishPlayer(Player player, int duration, Player staff){
-        File dir = Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder();
+        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
 
         try(Connection conn = DriverManager.getConnection(location)){
@@ -38,7 +35,7 @@ public class PunishmentDatabase {
                 stmt.execute(sql);
                 stmt.close();
 
-                File users = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder()+"/users");
+                File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
 
                 if(!users.exists()){
                     users.mkdir();
@@ -93,35 +90,8 @@ public class PunishmentDatabase {
         }
     }
 
-    public static String getPlayerPunishmentHistory(Player player){
-        File dir = Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder();
-        String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
-
-        try(Connection conn = DriverManager.getConnection(location)){
-
-            if(conn != null){
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM punishments WHERE UUID = ?");
-                stmt.setString(1, player.getUniqueId().toString());
-
-                ResultSet rs = stmt.executeQuery();
-
-                System.out.println(rs);
-
-                rs.close();
-                stmt.close();
-                conn.close();
-
-                return(rs.toString());
-            }
-        }catch (SQLException e){
-            System.out.println("[Simple-Ticket] SQL ERROR "+ e);
-
-        }
-        return "none";
-    }
-
     public static void setInactive(String uuid){
-        File users = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder()+"/users");
+        File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
         File file = new File(users, "activePunishments.yml");
 
         FileConfiguration f = YamlConfiguration.loadConfiguration(file);
@@ -136,7 +106,7 @@ public class PunishmentDatabase {
 
     public static ArrayList<UUID> getActivePunishments() {
 
-        File users = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder()+"/users");
+        File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
         File file = new File(users, "activePunishments.yml");
 
         ArrayList<UUID> playersToRemove = new ArrayList<>();
@@ -145,6 +115,7 @@ public class PunishmentDatabase {
 
         for(String key: f.getKeys(true)){
             String t = f.getString(key);
+            assert t != null;
             LocalDateTime ldt = LocalDateTime.parse(t);
 
             LocalDateTime currentTime = LocalDateTime.now();
@@ -168,7 +139,7 @@ public class PunishmentDatabase {
     }
 
     public static ArrayList<String> getPlayerHist(UUID uuid){
-        File dir = Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder();
+        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
         ArrayList<String> hist = new ArrayList<>();
 

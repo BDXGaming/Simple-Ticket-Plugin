@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Ticket{
 
-    private Integer num;
-    private Player owner;
+    private final Integer num;
+    private final Player owner;
     private Boolean claimed;
-    private Player staffClaimer;
-    private static ArrayList<Ticket> tickets = new ArrayList<>();
-    private static ArrayList<Player> players_with_tickets = new ArrayList<>();
-    private static ArrayList<Player> staff_with_tickets = new ArrayList<>();
+    private Player staffClaimer = null;
+    private static final ArrayList<Ticket> tickets = new ArrayList<>();
+    private static final ArrayList<Player> players_with_tickets = new ArrayList<>();
+    private static final ArrayList<Player> staff_with_tickets = new ArrayList<>();
     private static int ticket_count = 0;
     private String ticketLog = SimpleTicketConfig.get().getString("FirstMessage");
 
@@ -49,9 +49,7 @@ public class Ticket{
         ticketLog += "\n "+msg;
     }
 
-    public String getMsgLog(){
-        return ticketLog+ "\n ";
-    }
+    public String getMsgLog(){ return "\n"+ ticketLog+ "\n "; }
 
     public Player getStaffClaimer(){
         return staffClaimer;
@@ -112,17 +110,27 @@ public class Ticket{
     }
 
     public static String getAllTickets(){
-        String msg = "§eCurrent Tickets:";
+        StringBuilder msg = new StringBuilder(" \n \n§eCurrent Tickets:");
         for (Ticket t: tickets){
-            msg = msg + ("\n §d- Ticket-"+t.getNum() + " :Owner: "+ t.getOwner().getName());
+
+            if(t.getStaffClaimer() != null){
+                msg.append("\n   §d- Ticket-").append(t.getNum()).append(" :Owner: ").append(t.getOwner().getName()).append(" :Claimed by: ").append(t.getStaffClaimer().getDisplayName());
+
+            } else{
+                msg.append("\n   §d- Ticket-").append(t.getNum()).append(" :Owner: ").append(t.getOwner().getName());
+            }
+
         }
-        return msg;
+
+        msg.append("\n \n ");
+
+        return msg.toString();
     }
 
     public static void removeTicket(Ticket t){
         tickets.remove(t);
         Player remove = null;
-        Boolean test = false;
+        boolean test = false;
 
         for(Player pl: players_with_tickets){
             if(pl.getUniqueId().equals(t.getOwner().getUniqueId())){
