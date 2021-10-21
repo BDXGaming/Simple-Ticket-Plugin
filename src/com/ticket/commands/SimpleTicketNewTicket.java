@@ -21,7 +21,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
     public ArrayList<Player> getStaff(){
         ArrayList<Player> rt = new ArrayList<>();
         for (Player p: Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("Reactor.ticket.staff")) {
+            if (p.hasPermission("ticket.ticket.staff")) {
                 rt.add(p);
             }
         }

@@ -143,7 +143,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 msg.append(args[i]).append(" ");
                             }
                             if (!(t.isClaimed())) {
-                                for (Player s : staff) {
+                                for (Player s : getStaff()) {
                                     s.sendMessage(msg.toString());
                                     player.sendMessage(msg.toString());
                                     t.addmsg(msg.toString());
