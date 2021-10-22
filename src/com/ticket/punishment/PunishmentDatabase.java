@@ -16,7 +16,32 @@ import java.util.UUID;
 
 public class PunishmentDatabase {
 
-    public static void punishPlayer(Player player, int duration, Player staff){
+    public static void createDatabase() {
+        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
+        String location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
+
+        try (Connection conn = DriverManager.getConnection(location)) {
+            if (conn != null) {
+
+                String sql = "CREATE TABLE IF NOT EXISTS punishments (\n"
+                        + "UUID text, \n"
+                        + "name text, \n"
+                        + "duration int, \n"
+                        + "staffName text, \n"
+                        + "time text \n"
+                        + ");";
+
+                Statement stmt = conn.createStatement();
+                stmt.execute(sql);
+                stmt.close();
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+        public static void punishPlayer(Player player, int duration, Player staff){
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
 

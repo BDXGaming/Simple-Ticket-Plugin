@@ -5,6 +5,7 @@ import com.ticket.commands.SimpleTicketsTicket;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.commands.PlayerPunishmentHistoryCommand;
 import com.ticket.punishment.Punishment;
+import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.punishment.RemovePunishment;
 import com.ticket.commands.SimpleTicketPunishCommand;
 import com.ticket.commands.ViewActivePunishmentCommands;
@@ -17,6 +18,9 @@ public class SimpleTicket extends JavaPlugin{
 
     @Override
     public void onEnable(){
+
+        //Creates a database if it does not exist
+        PunishmentDatabase.createDatabase();
 
         //Checks for users who need to be removed from the active moderations list
         Punishment.checkPunishedPlayers();
