@@ -1,5 +1,6 @@
 package com.ticket.files;
 
+import com.ticket.SimpleTicket;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,16 +16,10 @@ public class SimpleTicketConfig {
 
     //Finds or generates config file thing
     public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder(), "config.yml");
 
-        if(!(file.exists())){
-            try{
-                file.createNewFile();
-            }catch (IOException e){
-                System.out.println(ChatColor.YELLOW + "[Simple-Ticket]: "+ e.toString());
-            }
-        }
-        customfile = YamlConfiguration.loadConfiguration(file);
+        SimpleTicket.simpleTicket.saveDefaultConfig();
+
+        customfile = SimpleTicket.simpleTicket.getConfig();
     }
 
     public static FileConfiguration get(){
@@ -40,6 +35,7 @@ public class SimpleTicketConfig {
     }
 
     public static void reload(){
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder(), "config.yml");
         customfile = YamlConfiguration.loadConfiguration(file);
     }
 

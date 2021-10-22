@@ -16,8 +16,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SimpleTicket extends JavaPlugin{
 
+    public static SimpleTicket simpleTicket;
+
     @Override
     public void onEnable(){
+
+        //Sets the instance of the plugin to the running plugin
+        simpleTicket = this;
 
         //Creates a database if it does not exist
         PunishmentDatabase.createDatabase();
@@ -31,10 +36,6 @@ public class SimpleTicket extends JavaPlugin{
 
         //This sets up the config file the first time that the plugin is run
         SimpleTicketConfig.setup();
-        SimpleTicketConfig.get().addDefault("FirstMessage"," \n§e Ticket Message History\n§e Welcome to your ticket, to reply type /tr then your message!");
-        SimpleTicketConfig.get().addDefault("Default Duration", 3200);
-        SimpleTicketConfig.get().options().copyDefaults(true);
-        SimpleTicketConfig.save();
 
         //All the commands are assigned executors here
         getCommand("ticket").setExecutor(tic);

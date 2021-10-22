@@ -1,0 +1,9 @@
+#Simple-Ticket Plugin Config
+
+#The default punishment duration in seconds
+Default Duration: 3600
+
+#The message that a user sees when they open a new ticket
+FirstMessage: |2-
+
+  §e Welcome to your ticket, to reply type /tr then your message!
