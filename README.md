@@ -25,8 +25,13 @@ There are only 4 commands within the entire plugin. Below are the commands and w
 - Sends a list of all currently open tickets. The ticket.ticket.staff permission is needed to use this command.
 ![list](https://user-images.githubusercontent.com/74644043/120880249-2a93e080-c597-11eb-9c9e-1cab44c4214e.png)
 
-### /tpunish <user> <duration (in seconds)>
+### Punishment Commands
+- These are used to prevent users from abusing the ticketing system
+- All users with ticket.ticket.staff permission will receive a broadcast upon any punishment or removal of punishment
+
+### /tpunish <user> <duration>
 - Prevents users from opening tickets for the duration provided 
+- Supports m, h, d time notations 
   
 ### /tunpunish <user>
 - Allows a previously punished user to once again open tickets 
