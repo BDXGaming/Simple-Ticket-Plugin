@@ -17,6 +17,9 @@ import java.util.UUID;
 
 public class PunishmentDatabase {
 
+    /**
+     * Creates the SQLite database file if none exists, adds table with given rows
+     */
     public static void createDatabase() {
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
@@ -42,7 +45,14 @@ public class PunishmentDatabase {
         }
     }
 
-        public static void punishPlayer(Player player, int duration, Player staff){
+    /**
+     * Adds the given player's punishment to the database
+     * The player is the player being punished, staff is the player whom executed the punishment
+     * @param player Player
+     * @param duration int
+     * @param staff Player
+     */
+    public static void punishPlayer(Player player, int duration, Player staff){
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
 
@@ -116,6 +126,10 @@ public class PunishmentDatabase {
         }
     }
 
+    /**
+     * Sets a punishment inactive for the given user UUID
+     * @param uuid String
+     */
     public static void setInactive(String uuid){
         File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
         File file = new File(users, "activePunishments.yml");
@@ -130,6 +144,10 @@ public class PunishmentDatabase {
         }
     }
 
+    /**
+     * Gets all active punishments for Simple-Ticket, returns ArrayList of players who need to be removed
+     * @return ArrayList<UUID>
+     */
     public static ArrayList<UUID> getActivePunishments() {
 
         File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
@@ -164,6 +182,11 @@ public class PunishmentDatabase {
         return playersToRemove;
     }
 
+    /**
+     * Get the string formatted history for the given user
+     * @param uuid UUID
+     * @return ArrayList<String>
+     */
     public static ArrayList<String> getPlayerHist(UUID uuid){
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";

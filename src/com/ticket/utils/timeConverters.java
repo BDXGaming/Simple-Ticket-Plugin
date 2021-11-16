@@ -1,6 +1,13 @@
 package com.ticket.utils;
 
 public class timeConverters {
+
+    /**
+     * Converts the given string duration to a second-based integer
+     * Supports m, h,hr,d,day time formatting
+     * @param dur String
+     * @return dur int
+     */
     public static int getDuration(String dur){
         if(dur.contains("m")){
             int index = dur.indexOf("m");
@@ -19,6 +26,11 @@ public class timeConverters {
         }
     }
 
+    /**
+     * Converts the given integer of time (in seconds) into a string
+     * @param duration int
+     * @return dur String
+     */
     public static String getStringDuration(int duration){
         String dur;
         if(duration <=60){

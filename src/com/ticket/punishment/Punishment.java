@@ -11,7 +11,12 @@ public class Punishment {
     private Player staff;
     private int duration;
 
-
+    /**
+     * Create a new punishment instance, adding a new punishment
+     * @param player Player
+     * @param duration int
+     * @param staff Player
+     */
     public Punishment(Player player, int duration, Player staff){
 
         this.punishedPlayer = player;
@@ -26,6 +31,10 @@ public class Punishment {
         PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff);
     }
 
+    /**
+     * Removes the given player for the list of active punishments
+     * @param p Player
+     */
     public static void removePunishedPlayer(Player p){
         if(playersPunished != null){
             if(playersPunished.contains(p.getUniqueId())){
@@ -35,6 +44,10 @@ public class Punishment {
         }
     }
 
+    /**
+     * Gets the ArrayList of actively punished players
+     * @return playersPunished ArrayList<UUID>
+     */
     public static ArrayList<UUID> getPunishedPlayers(){
 
         if(playersPunished == null){
@@ -43,6 +56,9 @@ public class Punishment {
         return playersPunished;
     }
 
+    /**
+     * Updates the active punishments to match those stored in the database
+     */
     public static void checkPunishedPlayers() {
         playersPunished =PunishmentDatabase.getActivePunishments();
     }
