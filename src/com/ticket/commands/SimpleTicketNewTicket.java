@@ -49,9 +49,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
 
                         player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
                         getStaff();
-                        for (Player p : staff) {
-                            p.sendMessage(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum());
-                        }
+                        Bukkit.broadcast(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
                         return true;
                     } else {
                         player.sendMessage("§cYou already have an open ticket!");
