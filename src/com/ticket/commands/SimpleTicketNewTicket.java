@@ -16,18 +16,6 @@ import java.util.UUID;
 
 public class SimpleTicketNewTicket implements CommandExecutor {
 
-    private ArrayList<Player> staff = getStaff();
-
-    public ArrayList<Player> getStaff(){
-        ArrayList<Player> rt = new ArrayList<>();
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("ticket.ticket.staff")) {
-                rt.add(p);
-            }
-        }
-        return rt;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -48,7 +36,6 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                         Ticket t = new Ticket(player);
 
                         player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                        getStaff();
                         Bukkit.broadcast(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
                         return true;
                     } else {
