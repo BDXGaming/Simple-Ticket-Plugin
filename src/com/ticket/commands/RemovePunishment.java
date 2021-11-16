@@ -1,5 +1,6 @@
-package com.ticket.punishment;
+package com.ticket.commands;
 
+import com.ticket.punishment.Punishment;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,8 +21,13 @@ public class RemovePunishment implements CommandExecutor {
             if(player.hasPermission("ticket.ticket.staff")){
                 if(args.length >= 1){
                     Player p = Bukkit.getPlayer(args[0]);
+                    if(p == null){
+                        sender.sendMessage(ChatColor.YELLOW + "This is not a valid player name!");
+                        return true;
+                    }
                     Punishment.removePunishedPlayer(p);
-                    player.sendMessage(ChatColor.GREEN+p.getDisplayName()+ChatColor.GREEN+" is now able to open tickets!");
+                    player.sendMessage(ChatColor.GREEN+p.getName()+ChatColor.GREEN+" is now able to open tickets!");
+                    Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName(), "ticket.ticket.staff");
                     return true;
 
                 }else{
