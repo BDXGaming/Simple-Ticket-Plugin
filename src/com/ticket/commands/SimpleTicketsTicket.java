@@ -12,18 +12,6 @@ import java.util.ArrayList;
 
 public class SimpleTicketsTicket implements CommandExecutor {
 
-    private ArrayList<Player> staff = getStaff();
-
-    public ArrayList<Player> getStaff(){
-        ArrayList<Player> rt = new ArrayList<>();
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("ticket.ticket.staff")) {
-                rt.add(p);
-            }
-        }
-        return rt;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -116,11 +104,9 @@ public class SimpleTicketsTicket implements CommandExecutor {
                             msg.append(args[i]).append(" ");
                         }
                         if (!(t.isClaimed())) {
-                            for (Player s : staff) {
-                                s.sendMessage(msg.toString());
-                                player.sendMessage(msg.toString());
-                                t.addmsg(msg.toString());
-                            }
+                            player.sendMessage(msg.toString());
+                            Bukkit.broadcast(msg.toString(), "ticket.ticket.staff");
+                            t.addmsg(msg.toString());
                             return true;
                         } else {
                             Player staff = t.getStaffClaimer();
@@ -143,11 +129,9 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 msg.append(args[i]).append(" ");
                             }
                             if (!(t.isClaimed())) {
-                                for (Player s : getStaff()) {
-                                    s.sendMessage(msg.toString());
-                                    player.sendMessage(msg.toString());
-                                    t.addmsg(msg.toString());
-                                }
+                                player.sendMessage(msg.toString());
+                                Bukkit.broadcast(msg.toString(), "ticket.ticket.staff");
+                                t.addmsg(msg.toString());
                                 return true;
                             } else {
                                 Player staff = t.getStaffClaimer();
@@ -161,7 +145,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                             return true;
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        Bukkit.getServer().getConsoleSender().sendMessage("Error");
+                        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED+"[Simple-Ticket]: Error in command processing!");
                         return false;
                     }
                 }
