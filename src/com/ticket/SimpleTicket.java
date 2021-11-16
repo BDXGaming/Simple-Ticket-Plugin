@@ -6,7 +6,7 @@ import com.ticket.files.SimpleTicketConfig;
 import com.ticket.commands.PlayerPunishmentHistoryCommand;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
-import com.ticket.punishment.RemovePunishment;
+import com.ticket.commands.RemovePunishment;
 import com.ticket.commands.SimpleTicketPunishCommand;
 import com.ticket.commands.ViewActivePunishmentCommands;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
