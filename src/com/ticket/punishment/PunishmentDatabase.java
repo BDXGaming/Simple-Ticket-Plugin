@@ -1,5 +1,6 @@
 package com.ticket.punishment;
 
+import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -180,7 +181,7 @@ public class PunishmentDatabase {
 
                 while(rs.next()){
                     String res;
-                    res = "Name: " + rs.getString("name") + "\nDuration: " + rs.getInt("duration") + "\n" + "Staff: " + rs.getString("staffName");
+                    res = "Name: " + rs.getString("name") + "\nDuration: " + timeConverters.getStringDuration(rs.getInt("duration")) + "\n" + "Staff: " + rs.getString("staffName");
                     hist.add(res);
                 }
 
