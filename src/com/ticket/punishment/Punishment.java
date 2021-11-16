@@ -18,11 +18,11 @@ public class Punishment {
         this.staff = staff;
         this.duration = duration;
 
-        System.out.println(duration);
+        if(playersPunished == null){
+            playersPunished = new ArrayList<>();
+        }
 
-        playersPunished = new ArrayList<UUID>();
         playersPunished.add(player.getUniqueId());
-
         PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff);
     }
 
