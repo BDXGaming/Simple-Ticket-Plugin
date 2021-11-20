@@ -1,14 +1,8 @@
 package com.ticket;
-import com.ticket.commands.SimpleTicketNewTicket;
-import com.ticket.commands.SimpleTicketReload;
-import com.ticket.commands.SimpleTicketsTicket;
+import com.ticket.commands.*;
 import com.ticket.files.SimpleTicketConfig;
-import com.ticket.commands.PlayerPunishmentHistoryCommand;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
-import com.ticket.commands.RemovePunishment;
-import com.ticket.commands.SimpleTicketPunishCommand;
-import com.ticket.commands.ViewActivePunishmentCommands;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
 import org.bukkit.ChatColor;
@@ -47,6 +41,7 @@ public class SimpleTicket extends JavaPlugin{
         getCommand("tunpunish").setExecutor(new RemovePunishment());
         getCommand("thist").setExecutor(new PlayerPunishmentHistoryCommand());
         getCommand("viewpunishments").setExecutor(new ViewActivePunishmentCommands());
+        getCommand("cleartickethist").setExecutor(new ClearPlayerHistory());
 
         //The tab complete for the ticket command
         getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());

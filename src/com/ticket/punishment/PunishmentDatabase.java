@@ -231,4 +231,21 @@ public class PunishmentDatabase {
         return null;
     }
 
+    public static void clearPlayerHistory(UUID uuid){
+        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
+        String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
+        try(Connection conn = DriverManager.getConnection(location)){
+
+            if(conn != null){
+                String sql = "DELETE FROM punishments WHERE UUID = "+'"'+uuid.toString()+'"';
+                Statement stmt = conn.createStatement();
+                stmt.execute(sql);
+                stmt.close();
+                conn.close();
+            }
+        }catch (SQLException e){
+            System.out.println("[Simple-Ticket] SQL ERROR "+ e);
+        }
+    }
+
 }

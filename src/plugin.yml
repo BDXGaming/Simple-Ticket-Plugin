@@ -28,7 +28,7 @@ commands:
 
   tpunish:
     description: This command blocks a user from opening tickets for the given time
-    usage: /<command> <player> <duration>
+    usage: /<command> <player> <duration> <reason>
     aliases: [tban, tblock]
 
   tunpunish:
@@ -46,6 +46,11 @@ commands:
     usage: /<command>
     aliases: [tactivepunishments, tlive]
 
+  cleartickethist:
+    description: Clears the Simple-Ticket punishment history of a user
+    usage: /<command> <player>
+    aliases: [thistclear, clearhist]
+
 permissions:
   ticket.*:
     description: Permissions for Simple-Ticket
@@ -53,3 +58,4 @@ permissions:
       ticket.ticket: true
       ticket.ticket.staff: true
       ticket.reload: true
+      ticket.ticket.staff.clearhist: true
