@@ -84,7 +84,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         else if (Ticket.hasClaim(player)) {
                             try {
                                 Ticket t = Ticket.getClaim(player);
-                                StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a(" + player.getDisplayName() + "§a)§d ");
+                                StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + player.getDisplayName() + "§a):§d ");
                                 for (int i = 0; i < args.length; i++) {
                                     msg.append(args[i]).append(" ");
                                 }
@@ -99,7 +99,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                     }
                     else if(Ticket.hasTicket(player)){
                         Ticket t = Ticket.getTicket(player);
-                        StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a(" + player.getDisplayName() + "§a)§d ");
+                        StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a (" + player.getDisplayName() + "§a):§d ");
                         for (int i = 0; i < args.length; i++) {
                             msg.append(args[i]).append(" ");
                         }
@@ -124,7 +124,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                     try {
                         if (Ticket.hasTicket(player)) {
                             Ticket t = Ticket.getTicket(player);
-                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a(" + player.getDisplayName() + "§a)§d ");
+                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + player.getDisplayName() + "§a):§d ");
                             for (int i = 0; i < args.length; i++) {
                                 msg.append(args[i]).append(" ");
                             }
