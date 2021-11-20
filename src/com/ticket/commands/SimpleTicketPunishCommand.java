@@ -5,6 +5,7 @@ import com.ticket.punishment.Punishment;
 import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
 
             if (player.hasPermission("ticket.ticket.staff")){
                 if(args.length >=1) {
-                    Player p = Bukkit.getPlayer(args[0]);
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                     assert p != null;
                     if (!(Punishment.getPunishedPlayers().contains(p.getUniqueId()))) {
                         if (args.length > 1) {
@@ -31,7 +32,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                             Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + sender.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ timeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")), "ticket.ticket.staff");
                         }
                     }else{
-                        player.sendMessage(ChatColor.YELLOW+p.getDisplayName()+ChatColor.YELLOW+" already cannot open tickets!");
+                        player.sendMessage(ChatColor.YELLOW+p.getName()+ChatColor.YELLOW+" already cannot open tickets!");
                     }
                 }
                 else{

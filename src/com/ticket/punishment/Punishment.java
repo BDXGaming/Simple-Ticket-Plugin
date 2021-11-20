@@ -1,5 +1,6 @@
 package com.ticket.punishment;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -7,7 +8,7 @@ import java.util.UUID;
 public class Punishment {
 
     private static ArrayList<UUID> playersPunished;
-    private Player punishedPlayer;
+    private OfflinePlayer punishedPlayer;
     private Player staff;
     private int duration;
 
@@ -17,7 +18,7 @@ public class Punishment {
      * @param duration int
      * @param staff Player
      */
-    public Punishment(Player player, int duration, Player staff){
+    public Punishment(OfflinePlayer player, int duration, Player staff){
 
         this.punishedPlayer = player;
         this.staff = staff;
@@ -35,7 +36,7 @@ public class Punishment {
      * Removes the given player for the list of active punishments
      * @param p Player
      */
-    public static void removePunishedPlayer(Player p){
+    public static void removePunishedPlayer(OfflinePlayer p){
         if(playersPunished != null){
             if(playersPunished.contains(p.getUniqueId())){
                 playersPunished.remove(p.getUniqueId());

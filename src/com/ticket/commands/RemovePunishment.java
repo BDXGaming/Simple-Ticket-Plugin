@@ -3,6 +3,7 @@ package com.ticket.commands;
 import com.ticket.punishment.Punishment;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,7 @@ public class RemovePunishment implements CommandExecutor {
 
             if(player.hasPermission("ticket.ticket.staff")){
                 if(args.length >= 1){
-                    Player p = Bukkit.getPlayer(args[0]);
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                     if(p == null){
                         sender.sendMessage(ChatColor.YELLOW + "This is not a valid player name!");
                         return true;

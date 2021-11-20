@@ -3,6 +3,7 @@ package com.ticket.punishment;
 import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -52,7 +53,7 @@ public class PunishmentDatabase {
      * @param duration int
      * @param staff Player
      */
-    public static void punishPlayer(Player player, int duration, Player staff){
+    public static void punishPlayer(OfflinePlayer player, int duration, Player staff){
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
 
