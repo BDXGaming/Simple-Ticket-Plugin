@@ -26,9 +26,15 @@ public class RemovePunishment implements CommandExecutor {
                         sender.sendMessage(ChatColor.YELLOW + "This is not a valid player name!");
                         return true;
                     }
-                    Punishment.removePunishedPlayer(p);
-                    player.sendMessage(ChatColor.GREEN+p.getName()+ChatColor.GREEN+" is now able to open tickets!");
-                    Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName(), "ticket.ticket.staff");
+                    if(Punishment.checkForPlayerPunishment(p.getUniqueId())){
+                        Punishment.removePunishedPlayer(p);
+                        player.sendMessage(ChatColor.GREEN+p.getName()+ChatColor.GREEN+" is now able to open tickets!");
+                        Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName(), "ticket.ticket.staff");
+                    }
+                    else{
+                        sender.sendMessage(ChatColor.YELLOW + "This player is not currently being punished!");
+                    }
+
                     return true;
 
                 }else{

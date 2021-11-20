@@ -58,6 +58,15 @@ public class Punishment {
     }
 
     /**
+     * Checks if the given UUID has an active punishment
+     * @param p UUID
+     * @return boolean
+     */
+    public static boolean checkForPlayerPunishment(UUID p){
+        return playersPunished.contains(p);
+    }
+
+    /**
      * Updates the active punishments to match those stored in the database
      */
     public static void checkPunishedPlayers() {
