@@ -1,5 +1,6 @@
 package com.ticket.punishment;
 
+import com.ticket.files.SimpleTicketConfig;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class Punishment {
         }
 
         playersPunished.add(player.getUniqueId());
-        PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff, "");
+        PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff, SimpleTicketConfig.get().getString("SuggestedReason"));
     }
 
     /**

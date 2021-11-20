@@ -9,6 +9,7 @@ import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.commands.RemovePunishment;
 import com.ticket.commands.SimpleTicketPunishCommand;
 import com.ticket.commands.ViewActivePunishmentCommands;
+import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,6 +50,7 @@ public class SimpleTicket extends JavaPlugin{
 
         //The tab complete for the ticket command
         getCommand("ticket").setTabCompleter(new SimpleTicketTabComplete());
+        getCommand("tpunish").setTabCompleter(new SimpleTicketPunishCommandTabComplete());
 
         //Showing that the plugin is enabled
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN +"[Simple Ticket] Plugin is enabled");
