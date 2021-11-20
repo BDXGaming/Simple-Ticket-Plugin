@@ -29,7 +29,28 @@ public class Punishment {
         }
 
         playersPunished.add(player.getUniqueId());
-        PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff);
+        PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff, "");
+    }
+
+    /**
+     * Create a new punishment instance, adding a new punishment
+     * @param player Player
+     * @param duration int
+     * @param staff Player
+     * @param reason String
+     */
+    public Punishment(OfflinePlayer player, int duration, Player staff, String reason){
+
+        this.punishedPlayer = player;
+        this.staff = staff;
+        this.duration = duration;
+
+        if(playersPunished == null){
+            playersPunished = new ArrayList<>();
+        }
+
+        playersPunished.add(player.getUniqueId());
+        PunishmentDatabase.punishPlayer(this.punishedPlayer, this.duration, this.staff, reason);
     }
 
     /**

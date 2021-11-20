@@ -34,7 +34,8 @@ public class PunishmentDatabase {
                         + "name text, \n"
                         + "duration int, \n"
                         + "staffName text, \n"
-                        + "time text \n"
+                        + "time text, \n"
+                        + "reason text \n"
                         + ");";
 
                 Statement stmt = conn.createStatement();
@@ -54,7 +55,7 @@ public class PunishmentDatabase {
      * @param duration int
      * @param staff Player
      */
-    public static void punishPlayer(OfflinePlayer player, int duration, Player staff){
+    public static void punishPlayer(OfflinePlayer player, int duration, Player staff, String reason){
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
 
@@ -66,7 +67,8 @@ public class PunishmentDatabase {
                         + "name text, \n"
                         + "duration int, \n"
                         + "staffName text, \n"
-                        + "time text \n"
+                        + "time text, \n"
+                        + "reason text \n"
                         + ");";
 
                 Statement stmt = conn.createStatement();
@@ -102,7 +104,7 @@ public class PunishmentDatabase {
                      timeExpired = myDateObj.plusSeconds(duration);
                 }
 
-                String addsql = "INSERT INTO punishments(UUID, name, duration, staffName, time) VALUES(?,?,?,?,?)";
+                String addsql = "INSERT INTO punishments(UUID, name, duration, staffName, time, reason) VALUES(?,?,?,?,?,?)";
 
                 PreparedStatement ps = conn.prepareStatement(addsql);
                 ps.setString(1, player.getUniqueId().toString());
@@ -110,6 +112,7 @@ public class PunishmentDatabase {
                 ps.setInt(3, duration);
                 ps.setString(4, staff.getName());
                 ps.setString(5, timeExpired.toString());
+                ps.setString(6, reason);
 
                 ps.executeUpdate();
 
@@ -209,7 +212,8 @@ public class PunishmentDatabase {
                     res = String.format(String.format(ChatColor.GREEN+ "Name: "+ChatColor.WHITE + rs.getString("name") +ChatColor.GREEN
                             + "\nDuration: " +ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) +ChatColor.GREEN
                             + "\nStaff: " +ChatColor.WHITE + rs.getString("staffName") +ChatColor.GREEN
-                            + "\nPunished: " +ChatColor.WHITE+ LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))));
+                            + "\nPunished: " +ChatColor.WHITE+ LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))) +ChatColor.GREEN
+                            + "\nReason: " +ChatColor.WHITE +rs.getString("reason"));
                     hist.add(res);
                 }
 

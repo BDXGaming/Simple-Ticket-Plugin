@@ -25,7 +25,12 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                     assert p != null;
                     if (!(Punishment.getPunishedPlayers().contains(p.getUniqueId()))) {
                         if (args.length > 1) {
-                            new Punishment(p, timeConverters.getDuration(args[1]), player);
+                            StringBuilder reason = new StringBuilder();
+                            for(int i=2; i <args.length; i++){
+                                reason.append(args[i]);
+                            }
+
+                            new Punishment(p, timeConverters.getDuration(args[1]), player, reason.toString());
                             Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1], "ticket.ticket.staff");
                         } else {
                             new Punishment(p, SimpleTicketConfig.get().getInt("Default Duration"), player);
