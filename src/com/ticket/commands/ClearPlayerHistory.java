@@ -28,6 +28,6 @@ public class ClearPlayerHistory implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "You don't have the permissions to use this command!");
 
         }
-        return false;
+        return true;
     }
 }
