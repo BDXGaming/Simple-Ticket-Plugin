@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -184,7 +185,7 @@ public class PunishmentDatabase {
     }
 
     /**
-     * Get the string formatted history for the given user
+     * Get the string and color formatted history for the given user
      * @param uuid UUID
      * @return ArrayList<String>
      */
@@ -205,7 +206,10 @@ public class PunishmentDatabase {
 
                 while(rs.next()){
                     String res;
-                    res = "Name: " + rs.getString("name") + "\nDuration: " + timeConverters.getStringDuration(rs.getInt("duration")) + "\n" + "Staff: " + rs.getString("staffName");
+                    res = String.format(String.format(ChatColor.GREEN+ "Name: "+ChatColor.WHITE + rs.getString("name") +ChatColor.GREEN
+                            + "\nDuration: " +ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) +ChatColor.GREEN
+                            + "\nStaff: " +ChatColor.WHITE + rs.getString("staffName") +ChatColor.GREEN
+                            + "\nPunished: " +ChatColor.WHITE+ LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))));
                     hist.add(res);
                 }
 

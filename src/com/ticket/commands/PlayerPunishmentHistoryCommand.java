@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PlayerPunishmentHistoryCommand implements CommandExecutor {
     @Override
@@ -23,11 +24,12 @@ public class PlayerPunishmentHistoryCommand implements CommandExecutor {
                     p.getUniqueId();
                     ArrayList<String> hist = PunishmentDatabase.getPlayerHist(p.getUniqueId());
                     assert hist != null;
+                    Collections.reverse(hist);
                     StringBuilder strHist = new StringBuilder();
                     for (String h : hist) {
                         strHist.append(h).append("\n \n");
                     }
-                    sender.sendMessage(ChatColor.YELLOW + "\nSimpleTicket Punishment History\n \n" + ChatColor.GREEN + strHist + "\n \n");
+                    sender.sendMessage(ChatColor.YELLOW + "\nSimpleTicket Punishment History for " +p.getName()+"\n \n" + ChatColor.GREEN + strHist + "\n \n");
                     return true;
                 }catch (ArrayIndexOutOfBoundsException e){
                     sender.sendMessage(ChatColor.YELLOW + "Please use the following format /"+label+" <player>");
