@@ -25,7 +25,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                     OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                     assert p != null;
                     if (!(Punishment.getPunishedPlayers().contains(p.getUniqueId()))) {
-                        if (args.length < 1) {
+                        if (args.length > 1) {
                             StringBuilder reason = new StringBuilder();
                             for(int i=2; i <args.length; i++){
                                 reason.append(args[i]);
