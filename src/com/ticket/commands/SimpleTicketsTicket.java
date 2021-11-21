@@ -1,5 +1,7 @@
 package com.ticket.commands;
 
+import com.ticket.events.ticketClaimEvent;
+import com.ticket.events.ticketCloseEvent;
 import com.ticket.files.Ticket;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -47,8 +49,15 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 Ticket t = Ticket.getTicket(args[1]);
                                 assert t != null;
                                 if (!(t.isClaimed())) {
-                                    t.claimTicket(player);
-                                    player.sendMessage("§aClaimed Ticket-" + t.getNum());
+
+                                    ticketClaimEvent event = new ticketClaimEvent(t,player);
+                                    Bukkit.getPluginManager().callEvent(event);
+
+                                    if(!event.isCancelled()){
+                                        t.claimTicket(player);
+                                        player.sendMessage("§aClaimed Ticket-" + t.getNum());
+                                    }
+
                                     return true;
                                 } else {
                                     player.sendMessage("§cThis ticket is already claimed by: " + t.getStaffClaimer().getDisplayName());
@@ -63,10 +72,17 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         //Closes and deletes the ticket
                         else if (args[0].equalsIgnoreCase("close")) {
                             Ticket t = Ticket.getTicket(args[1]);
-                            player.sendMessage("§c[Ticket-" + args[1] + "]§c§l Deleted");
-                            if (t != null) {
-                                t.deleteTicket();
+
+                            ticketCloseEvent event = new ticketCloseEvent(t, player);
+                            Bukkit.getPluginManager().callEvent(event);
+
+                            if(!event.isCancelled()){
+                                player.sendMessage("§c[Ticket-" + args[1] + "]§c§l Deleted");
+                                if (t != null) {
+                                    t.deleteTicket();
+                                }
                             }
+
                             return true;
                         }
 

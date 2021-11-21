@@ -1,5 +1,6 @@
 package com.ticket.commands;
 
+import com.ticket.events.clearPunishmentHistEvent;
 import com.ticket.punishment.PunishmentDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,6 +8,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class ClearPlayerHistory implements CommandExecutor {
     @Override
@@ -17,7 +19,12 @@ public class ClearPlayerHistory implements CommandExecutor {
             if(args.length >0){
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                 PunishmentDatabase.clearPlayerHistory(p.getUniqueId());
-                sender.sendMessage(ChatColor.GREEN + "Ticket Hist Cleared for: " + ChatColor.WHITE + p.getName());
+                clearPunishmentHistEvent event = new clearPunishmentHistEvent(p, (Player) sender);
+                Bukkit.getPluginManager().callEvent(event);
+                if(!event.isCancelled()){
+                    sender.sendMessage(ChatColor.GREEN + "Ticket Hist Cleared for: " + ChatColor.WHITE + p.getName());
+                }
+
                 return true;
             }
             else{

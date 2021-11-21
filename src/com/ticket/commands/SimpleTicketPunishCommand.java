@@ -1,5 +1,6 @@
 package com.ticket.commands;
 
+import com.ticket.events.PunishEvent;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.punishment.Punishment;
 import com.ticket.utils.timeConverters;
@@ -29,12 +30,44 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                             for(int i=2; i <args.length; i++){
                                 reason.append(args[i]);
                             }
+                            String modReason = reason.toString();
+                            int time = timeConverters.getDuration(args[1]);
+                            PunishEvent event = new PunishEvent(p, player, reason.toString(), timeConverters.getDuration(args[1]));
+                            Bukkit.getPluginManager().callEvent(event);
 
-                            new Punishment(p, timeConverters.getDuration(args[1]), player, reason.toString());
-                            Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1], "ticket.ticket.staff");
+                            if(!event.isCancelled()){
+
+                                if(event.isModified()){
+                                    p = event.getOfflinePlayer();
+                                    player = event.getExecutor();
+                                    time = event.getDuration();
+                                    modReason = event.getReason();
+                                }
+
+                                new Punishment(p, time, player, modReason);
+                                Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1], "ticket.ticket.staff");
+                            }
+
+
                         } else {
-                            new Punishment(p, SimpleTicketConfig.get().getInt("Default Duration"), player);
-                            Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + sender.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ timeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")), "ticket.ticket.staff");
+
+                            int time = SimpleTicketConfig.get().getInt("Default Duration");
+                            PunishEvent event = new PunishEvent(p, player, time);
+                            Bukkit.getPluginManager().callEvent(event);
+
+                            if(!event.isCancelled()){
+
+                                if(event.isModified()){
+                                    p = event.getOfflinePlayer();
+                                    player = event.getExecutor();
+                                    time = event.getDuration();
+                                }
+
+                                new Punishment(p, time, player);
+                                Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + player.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ timeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")), "ticket.ticket.staff");
+                            }
+
+
                         }
                     }else{
                         player.sendMessage(ChatColor.YELLOW+p.getName()+ChatColor.YELLOW+" already cannot open tickets!");

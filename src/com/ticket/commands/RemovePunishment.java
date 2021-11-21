@@ -1,5 +1,6 @@
 package com.ticket.commands;
 
+import com.ticket.events.RemovePunishmentEvent;
 import com.ticket.punishment.Punishment;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,9 +28,16 @@ public class RemovePunishment implements CommandExecutor {
                         return true;
                     }
                     if(Punishment.checkForPlayerPunishment(p.getUniqueId())){
-                        Punishment.removePunishedPlayer(p);
-                        player.sendMessage(ChatColor.GREEN+p.getName()+ChatColor.GREEN+" is now able to open tickets!");
-                        Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName(), "ticket.ticket.staff");
+
+                        RemovePunishmentEvent event = new RemovePunishmentEvent(p, player);
+                        Bukkit.getPluginManager().callEvent(event);
+
+                        if(!event.isCancelled()){
+                            Punishment.removePunishedPlayer(p);
+                            player.sendMessage(ChatColor.GREEN+p.getName()+ChatColor.GREEN+" is now able to open tickets!");
+                            Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName(), "ticket.ticket.staff");
+                        }
+
                     }
                     else{
                         sender.sendMessage(ChatColor.YELLOW + "This player is not currently being punished!");

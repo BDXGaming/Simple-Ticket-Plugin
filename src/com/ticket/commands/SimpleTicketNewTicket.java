@@ -1,5 +1,6 @@
 package com.ticket.commands;
 
+import com.ticket.events.ticketCreateEvent;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.Ticket;
 import com.ticket.punishment.Punishment;
@@ -33,10 +34,15 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                 ArrayList<UUID> playersPunished = Punishment.getPunishedPlayers();
                 if(!(playersPunished.contains(player.getUniqueId()))) {
                     if (!(Ticket.hasTicket(player))) {
-                        Ticket t = new Ticket(player);
 
-                        player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                        Bukkit.broadcast(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
+                        Ticket t = new Ticket(player);
+                        ticketCreateEvent event = new ticketCreateEvent(t, player);
+
+                        if(!event.isCancelled()){
+                            player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
+                            Bukkit.broadcast(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
+                        }
+
                         return true;
                     } else {
                         player.sendMessage("§cYou already have an open ticket!");
