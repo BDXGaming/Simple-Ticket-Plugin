@@ -48,8 +48,9 @@ This plugin uses the displayname of the user, so it works with both rank prefixe
 
 
 ## Permissions
-There are only three permissions for the plugin. This is part of keeping the plugin simple and easy to use. 
+There are only 4 permissions for the plugin. This is part of keeping the plugin simple and easy to use. 
 - ticket.ticket.staff : This is the staff permission node and allows for the claiming, history, and close subcommands to be used. It also allows the /tickets to be used.
+- ticket.ticket.staff.clearhist : This is the required permission to clear a users punishment history.
 - ticket.ticket : This allows people to open new tickets and respond to their ticket (use of /newticket and /ticket) 
 - ticket.ticket.reload : This allows for the config file to be reloaded
 
