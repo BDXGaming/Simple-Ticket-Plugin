@@ -3,6 +3,8 @@ package com.ticket.commands;
 import com.ticket.events.ticketClaimEvent;
 import com.ticket.events.ticketCloseEvent;
 import com.ticket.files.Ticket;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -128,6 +130,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                             Player staff = t.getStaffClaimer();
                             staff.sendMessage(msg.toString());
                             player.sendMessage(msg.toString());
+                            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg.toString()));
                             t.addmsg(msg.toString());
                             return true;
                         }
