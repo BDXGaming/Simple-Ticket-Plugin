@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SimpleTicketsTicket implements CommandExecutor {
 
@@ -106,8 +107,9 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 for (int i = 0; i < args.length; i++) {
                                     msg.append(args[i]).append(" ");
                                 }
-                                Bukkit.getPlayer(t.getOwner().getUniqueId()).sendMessage(msg.toString());
+                                Objects.requireNonNull(Bukkit.getPlayer(t.getOwner().getUniqueId())).sendMessage(msg.toString());
                                 player.sendMessage(msg.toString());
+                                Objects.requireNonNull(Bukkit.getPlayer(t.getOwner().getUniqueId())).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg.toString()));
                                 t.addmsg(msg.toString());
                             } catch (ArrayIndexOutOfBoundsException e) {
                                 return true;
