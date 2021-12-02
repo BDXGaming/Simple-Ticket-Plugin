@@ -1,8 +1,7 @@
 name: Simple-Ticket
-version: 0.7.2
-author: BDX
+version: 0.8.0
+author: BDX____
 main: com.ticket.SimpleTicket
-api-version: 1.16
 
 commands:
 
