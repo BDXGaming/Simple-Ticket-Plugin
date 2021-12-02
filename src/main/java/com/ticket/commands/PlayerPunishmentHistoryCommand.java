@@ -29,7 +29,9 @@ public class PlayerPunishmentHistoryCommand implements CommandExecutor {
                     for (String h : hist) {
                         strHist.append(h).append("\n \n");
                     }
-                    sender.sendMessage(ChatColor.YELLOW + "\nSimpleTicket Punishment History for " +p.getName()+"\n \n" + ChatColor.GREEN + strHist + "\n \n");
+                    sender.sendMessage(ChatColor.YELLOW +""+
+                            ChatColor.BOLD+ "\nSimpleTicket Punishment History for " +
+                            p.getName()+"\n \n" +ChatColor.RESET+ ChatColor.GREEN + strHist + "\n \n");
                     return true;
                 }catch (ArrayIndexOutOfBoundsException e){
                     sender.sendMessage(ChatColor.YELLOW + "Please use the following format /"+label+" <player>");

@@ -28,7 +28,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                         if (args.length > 1) {
                             StringBuilder reason = new StringBuilder();
                             for(int i=2; i <args.length; i++){
-                                reason.append(args[i]);
+                                reason.append(args[i]).append(" ");
                             }
                             String modReason = reason.toString();
                             int time = timeConverters.getDuration(args[1]);

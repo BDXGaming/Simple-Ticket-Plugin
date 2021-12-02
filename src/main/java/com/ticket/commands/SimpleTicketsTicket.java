@@ -58,7 +58,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
 
                                     if(!event.isCancelled()){
                                         t.claimTicket(player);
-                                        player.sendMessage("§aClaimed Ticket-" + t.getNum());
+                                        Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE + player.getName() + ChatColor.GREEN+" claimed Ticket-"+ t.getNum(), "ticket.ticket.staff");
                                     }
 
                                     return true;
