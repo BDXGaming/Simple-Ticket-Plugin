@@ -189,14 +189,14 @@ public class Ticket{
      * @return String
      */
     public static String getAllTickets(){
-        StringBuilder msg = new StringBuilder(ChatColor.BOLD +""+ ChatColor.YELLOW + "\nCurrent Tickets \n \n" + ChatColor.RESET + "");
+        StringBuilder msg = new StringBuilder(ChatColor.translateAlternateColorCodes('&',"\n&e&lCurrent Tickets \n \n"));
         for (Ticket t: tickets){
 
             if(t.getStaffClaimer() != null){
-                msg.append("\n   §d- Ticket-").append(t.getNum()).append(" :Owner: ").append(t.getOwner().getName()).append(" :Claimed by: ").append(t.getStaffClaimer().getDisplayName());
+                msg.append(ChatColor.WHITE).append(" - ").append(ChatColor.LIGHT_PURPLE).append(t.getOwner().getName()).append("'s ").append(ChatColor.WHITE).append("Ticket-").append(t.getNum()).append(ChatColor.LIGHT_PURPLE).append(" Claimed by ").append(ChatColor.YELLOW).append(t.getStaffClaimer().getDisplayName());
 
             } else{
-                msg.append("\n   §d- Ticket-").append(t.getNum()).append(" :Owner: ").append(t.getOwner().getName());
+                msg.append(ChatColor.WHITE).append(" - ").append(ChatColor.LIGHT_PURPLE).append(t.getOwner().getName()).append("'s ").append(ChatColor.WHITE).append("Ticket-").append(t.getNum());
             }
 
         }
