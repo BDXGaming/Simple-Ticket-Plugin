@@ -1,4 +1,5 @@
 package com.ticket.files;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
@@ -23,38 +24,75 @@ public class Ticket{
         tickets.add(this);
     }
 
+    /**
+     * When .toString() is called instance returns the ticket number as a String
+     * @return String
+     */
     public String toString(){
         return num.toString();
     }
 
+    /**
+     * Gets the number of the ticket
+     * @return Integer
+     */
     public Integer getNum(){
         return this.num;
     }
 
+    /**
+     * Gets the owner of the ticket, based on the ticket instance
+     * @return Player
+     */
     public Player getOwner(){
         return this.owner;
     }
 
+    /**
+     * Checks if the ticket instance is claimed
+     * @return boolean
+     */
     public Boolean isClaimed(){
         return claimed;
     }
 
+    /**
+     * The given player claims the ticket
+     * @param player Player
+     */
     public void claimTicket(Player player){
         claimed = true;
         staffClaimer = player;
         staff_with_tickets.add(player);
     }
 
+    /**
+     * Adds a message to the ticket message history
+     * @param msg String
+     */
     public void addmsg(String msg){
         ticketLog += "\n "+msg;
     }
 
+    /**
+     * Gets the ticket message history
+     * @return String
+     */
     public String getMsgLog(){ return "\n"+ ticketLog+ "\n "; }
 
+    /**
+     * Gets the user with the staff permission who claimed the given ticket
+     * @return Player
+     */
     public Player getStaffClaimer(){
         return staffClaimer;
     }
 
+    /**
+     * Checks if the given player has a claimed ticket
+     * @param p Player
+     * @return boolean
+     */
     public static Boolean hasClaim(Player p){
         for (Ticket t: tickets){
             if(t.isClaimed()){
@@ -66,6 +104,11 @@ public class Ticket{
         return false;
     }
 
+    /**
+     * Gets the ticket that the player has claimed, if exists
+     * @param p Player
+     * @return Ticket || null
+     */
     public static Ticket getClaim(Player p){
         for (Ticket t: tickets){
             if(t.isClaimed()){
@@ -77,11 +120,19 @@ public class Ticket{
         return null;
     }
 
+    /**
+     * Removes a ticket
+     */
     public void deleteTicket(){
         staff_with_tickets.remove(staffClaimer);
         removeTicket(this);
     }
 
+    /**
+     * Checks if the given player has an open ticket
+     * @param p Player
+     * @return boolean
+     */
     public static Boolean hasTicket(Player p){
         for(Player pl: players_with_tickets){
             if(pl.getUniqueId().equals(p.getUniqueId())){
@@ -91,6 +142,11 @@ public class Ticket{
         return false;
     }
 
+    /**
+     * Gets the ticket instance with the given ticket owner
+     * @param player Player
+     * @return Ticket
+     */
     public static Ticket getTicket(Player player){
         for(Ticket t: tickets){
             if(t.getOwner().getUniqueId().equals(player.getUniqueId())){
@@ -100,6 +156,11 @@ public class Ticket{
         return null;
     }
 
+    /**
+     * Gets the ticket instance with the given number
+     * @param num String
+     * @return Ticket
+     */
     public static Ticket getTicket(String num){
         for(Ticket t: tickets){
             if(String.valueOf(t.getNum()).equals(num)){
@@ -109,8 +170,26 @@ public class Ticket{
         return null;
     }
 
+    /**
+     * Gets the ticket instance with the given number
+     * @param num int
+     * @return Ticket
+     */
+    public static Ticket getTicket(int num){
+        for(Ticket t: tickets){
+            if(String.valueOf(t.getNum()).equals(String.valueOf(num))){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the formatted message of all open tickets
+     * @return String
+     */
     public static String getAllTickets(){
-        StringBuilder msg = new StringBuilder(" \n \n§eCurrent Tickets:");
+        StringBuilder msg = new StringBuilder(ChatColor.BOLD +""+ ChatColor.YELLOW + "\nCurrent Tickets \n \n" + ChatColor.RESET + "");
         for (Ticket t: tickets){
 
             if(t.getStaffClaimer() != null){
@@ -127,6 +206,10 @@ public class Ticket{
         return msg.toString();
     }
 
+    /**
+     * Removes the given ticket
+     * @param t Ticket
+     */
     public static void removeTicket(Ticket t){
         tickets.remove(t);
         Player remove = null;
@@ -143,10 +226,18 @@ public class Ticket{
         }
     }
 
+    /**
+     * Returns an arraylist of all staff users currently with open tickets
+     * @return Arraylist
+     */
     public static ArrayList<Player> getStaffWithTickets(){
         return staff_with_tickets;
     }
 
+    /**
+     * Gets the arraylist of all currently open tickets
+     * @return ArrayList<Ticket>
+     */
     public static ArrayList<Ticket> getTickets(){
         return tickets;
     }
