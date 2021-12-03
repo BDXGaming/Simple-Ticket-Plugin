@@ -2,6 +2,7 @@ package com.ticket.commands;
 
 import com.ticket.events.PunishEvent;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
 import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
-            if (player.hasPermission("ticket.ticket.staff")){
+            if (player.hasPermission(TicketConstants.TICKET_STAFF_PERM)){
                 if(args.length >=1) {
                     OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                     assert p != null;

@@ -3,6 +3,7 @@ package com.ticket.commands;
 import com.ticket.events.ticketClaimEvent;
 import com.ticket.events.ticketCloseEvent;
 import com.ticket.files.Ticket;
+import com.ticket.files.TicketConstants;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
 
         Player player = (Player) sender;
         if(cmd.getName().equalsIgnoreCase("tickets")){
-            if(player.hasPermission("ticket.ticket.staff")){
+            if(player.hasPermission(TicketConstants.TICKET_STAFF_PERM)){
                 String message = Ticket.getAllTickets();
                 player.sendMessage(message);
                 return true;
@@ -40,9 +41,9 @@ public class SimpleTicketsTicket implements CommandExecutor {
         }
 
         if(cmd.getName().equalsIgnoreCase("ticket")){
-            if(player.hasPermission("ticket.ticket")){
+            if(player.hasPermission(TicketConstants.TICKET_PERM)){
 
-                if(player.hasPermission("ticket.ticket.staff")) {
+                if(player.hasPermission(TicketConstants.TICKET_STAFF_PERM)) {
 
                     if (args.length > 0) {
 
@@ -123,7 +124,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 msg.append(args[i]).append(" ");
                             }
                             if (!(t.isClaimed())) {
-                                Bukkit.broadcast(msg.toString(), "ticket.ticket.staff");
+                                Bukkit.broadcast(msg.toString(), TicketConstants.TICKET_STAFF_PERM);
                                 t.addmsg(msg.toString());
                                 return true;
                             } else {

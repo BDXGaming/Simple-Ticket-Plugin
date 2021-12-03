@@ -1,18 +1,20 @@
 package com.ticket.files;
 
+import java.util.List;
+
 public class StatusController {
 
-    private String SuggestedReason;
+    public String SUGGESTED_REASON;
+    public List<String> SUGGESTED_DURATIONS;
 
     public StatusController() {
-        this.SuggestedReason = SimpleTicketConfig.get().getString("SuggestedReason");
+        this.SUGGESTED_REASON = SimpleTicketConfig.get().getString("SuggestedReason");
+        this.SUGGESTED_DURATIONS = SimpleTicketConfig.get().getStringList("SuggestedDurations");
     }
 
     public void reload(){
-        this.SuggestedReason = SimpleTicketConfig.get().getString("SuggestedReason");
+        this.SUGGESTED_REASON = SimpleTicketConfig.get().getString("SuggestedReason");
+        this.SUGGESTED_DURATIONS = SimpleTicketConfig.get().getStringList("SuggestedDurations");
     }
 
-    public String getSuggestedReason() {
-        return SuggestedReason;
-    }
 }

@@ -1,6 +1,7 @@
 package com.ticket.commands;
 
 import com.ticket.events.RemovePunishmentEvent;
+import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,7 +21,7 @@ public class RemovePunishment implements CommandExecutor {
         if (sender instanceof Player){
             Player player = (Player) sender;
 
-            if(player.hasPermission("ticket.ticket.staff")){
+            if(player.hasPermission(TicketConstants.TICKET_STAFF_PERM)){
                 if(args.length >= 1){
                     OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                     if(p == null){

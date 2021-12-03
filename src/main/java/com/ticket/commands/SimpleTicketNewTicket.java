@@ -3,6 +3,7 @@ package com.ticket.commands;
 import com.ticket.events.ticketCreateEvent;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.Ticket;
+import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import org.bukkit.Bukkit;
@@ -30,7 +31,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
         Player player = (Player) sender;
 
         if (cmd.getName().equalsIgnoreCase("newticket")) {
-            if (player.hasPermission("ticket.ticket")) {
+            if (player.hasPermission(TicketConstants.TICKET_PERM)) {
                 ArrayList<UUID> playersPunished = Punishment.getPunishedPlayers();
                 if(!(playersPunished.contains(player.getUniqueId()))) {
                     if (!(Ticket.hasTicket(player))) {

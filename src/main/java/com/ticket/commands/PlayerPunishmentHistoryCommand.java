@@ -1,5 +1,6 @@
 package com.ticket.commands;
 
+import com.ticket.files.TicketConstants;
 import com.ticket.punishment.PunishmentDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ public class PlayerPunishmentHistoryCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(sender.hasPermission("ticket.ticket.staff")){
+        if(sender.hasPermission(TicketConstants.TICKET_STAFF_PERM)){
 
             if(args.length >=0){
                 try {

@@ -1,6 +1,7 @@
 package com.ticket.commands;
 
 import com.ticket.events.clearPunishmentHistEvent;
+import com.ticket.files.TicketConstants;
 import com.ticket.punishment.PunishmentDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +15,7 @@ public class ClearPlayerHistory implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
-        if(sender.hasPermission("ticket.ticket.staff.clearhist")){
+        if(sender.hasPermission(TicketConstants.TICKET_HIST_CLEAR_PERM)){
 
             if(args.length >0){
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
