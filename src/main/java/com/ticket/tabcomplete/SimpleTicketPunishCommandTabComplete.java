@@ -2,6 +2,7 @@ package com.ticket.tabcomplete;
 
 import com.ticket.SimpleTicket;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.files.StatusController;
 import com.ticket.utils.playerList;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -40,11 +41,11 @@ public class SimpleTicketPunishCommandTabComplete implements TabCompleter {
             return tab;
         }
 
-        else if(args.length >=3){
-            tab.add("");
+        else if(args.length ==3){
+            tab.add(SimpleTicket.statusController.getSuggestedReason());
             return tab;
         }
 
-        return null;
+        return tab;
     }
 }

@@ -1,6 +1,7 @@
 package com.ticket;
 import com.ticket.commands.*;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.files.StatusController;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SimpleTicket extends JavaPlugin{
 
     public static SimpleTicket simpleTicket;
+    public static StatusController statusController;
 
     @Override
     public void onEnable(){
@@ -25,12 +27,13 @@ public class SimpleTicket extends JavaPlugin{
         //Checks for users who need to be removed from the active moderations list
         Punishment.checkPunishedPlayers();
 
+        //This sets up the config file the first time that the plugin is run
+        SimpleTicketConfig.setup();
+        statusController = new StatusController();
+
         //The classes that are used in the commandExecuters
         SimpleTicketNewTicket nt = new SimpleTicketNewTicket();
         SimpleTicketsTicket tic = new SimpleTicketsTicket();
-
-        //This sets up the config file the first time that the plugin is run
-        SimpleTicketConfig.setup();
 
         //All the commands are assigned executors here
         getCommand("ticket").setExecutor(tic);
