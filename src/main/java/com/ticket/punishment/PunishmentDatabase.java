@@ -207,6 +207,11 @@ public class PunishmentDatabase {
 
                 ResultSet rs = stmt.executeQuery();
 
+                if(!rs.next()){
+                    String res = "\n" + ChatColor.GREEN + "No Hist Found!";
+                    hist.add(res);
+                }
+
                 while(rs.next()){
                     String res;
                     res = String.format(String.format(ChatColor.GREEN+ "Name: "+ChatColor.WHITE + rs.getString("name") +ChatColor.GREEN
@@ -216,6 +221,7 @@ public class PunishmentDatabase {
                             + "\nReason: " +ChatColor.WHITE +rs.getString("reason"));
                     hist.add(res);
                 }
+
 
                 rs.close();
                 stmt.close();
