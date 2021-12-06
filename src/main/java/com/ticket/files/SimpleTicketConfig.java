@@ -25,14 +25,6 @@ public class SimpleTicketConfig {
         return customfile;
     }
 
-    public static void save(){
-        try {
-            customfile.save(file);
-        }catch (IOException e){
-            System.out.println("Could not save file");
-        }
-    }
-
     public static void reload(){
         file = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder(), "config.yml");
         customfile = YamlConfiguration.loadConfiguration(file);
