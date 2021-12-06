@@ -33,7 +33,7 @@ public class SimpleTicket extends JavaPlugin{
         statusController = new StatusController();
 
         //Creates a database if it does not exist
-        try { PunishmentDatabase.createDatabase(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }
+        try { PunishmentDatabase.createDatabaseConnection(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }
 
         //The classes that are used in the commandExecuters
         SimpleTicketNewTicket nt = new SimpleTicketNewTicket();

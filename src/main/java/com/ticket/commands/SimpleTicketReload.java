@@ -28,7 +28,7 @@ public class SimpleTicketReload implements CommandExecutor {
                 PunishmentDatabase.closeConn();
                 SimpleTicket.statusController.reload();
                 try {
-                    PunishmentDatabase.createDatabase();
+                    PunishmentDatabase.createDatabaseConnection();
                 } catch (SQLException throwables) {
                     Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
                 }
@@ -43,7 +43,7 @@ public class SimpleTicketReload implements CommandExecutor {
             PunishmentDatabase.closeConn();
             SimpleTicket.statusController.reload();
             try {
-                PunishmentDatabase.createDatabase();
+                PunishmentDatabase.createDatabaseConnection();
             } catch (SQLException throwables) {
                 Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
             }
