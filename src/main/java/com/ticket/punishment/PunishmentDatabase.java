@@ -1,5 +1,7 @@
 package com.ticket.punishment;
 
+import com.ticket.SimpleTicket;
+import com.ticket.files.SimpleTicketConfig;
 import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,37 +16,53 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
 public class PunishmentDatabase {
 
+    private static Connection conn;
+
     /**
      * Creates the SQLite database file if none exists, adds table with given rows
      */
-    public static void createDatabase() {
+    public static void createDatabaseConnection() throws SQLException {
         File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
-        String location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
+        String location ="";
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            Bukkit.getLogger().warning(e.toString());
+        }
 
-        try (Connection conn = DriverManager.getConnection(location)) {
-            if (conn != null) {
+        if(SimpleTicket.statusController.sqlDataBaseType.equalsIgnoreCase("sqlite")){
+            location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
+            conn = DriverManager.getConnection(location);
 
-                String sql = "CREATE TABLE IF NOT EXISTS punishments (\n"
-                        + "UUID text, \n"
-                        + "name text, \n"
-                        + "duration int, \n"
-                        + "staffName text, \n"
-                        + "time text, \n"
-                        + "reason text \n"
-                        + ");";
+        }else if(SimpleTicket.statusController.sqlDataBaseType.equalsIgnoreCase("postgresql")){
+            location = "jdbc:postgresql://"+SimpleTicket.statusController.address +"/"+SimpleTicket.statusController.databaseName;
+            conn = DriverManager.getConnection(location, SimpleTicket.statusController.username, SimpleTicket.statusController.password);
 
-                Statement stmt = conn.createStatement();
-                stmt.execute(sql);
-                stmt.close();
+            Bukkit.getServer().getConsoleSender().sendMessage("Database Connected!");
+        }
 
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+        if (conn != null) {
+
+            String sql = "CREATE TABLE IF NOT EXISTS simpleticket_punishments (\n"
+                    + "uuid text, \n"
+                    + "username text, \n"
+                    + "duration int, \n"
+                    + "staffName text, \n"
+                    + "time text, \n"
+                    + "reason text \n"
+                    + ");";
+
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+            stmt.close();
+
         }
     }
 
@@ -56,20 +74,17 @@ public class PunishmentDatabase {
      * @param staff Player
      */
     public static void punishPlayer(OfflinePlayer player, int duration, Player staff, String reason){
-        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
-        String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
 
-        try(Connection conn = DriverManager.getConnection(location)){
-            if (conn != null) {
+        if (conn != null) {
 
-                String sql = "CREATE TABLE IF NOT EXISTS punishments (\n"
-                        + "UUID text, \n"
-                        + "name text, \n"
-                        + "duration int, \n"
-                        + "staffName text, \n"
-                        + "time text, \n"
-                        + "reason text \n"
-                        + ");";
+            try{String sql = "CREATE TABLE IF NOT EXISTS simpleticket_punishments (\n"
+                    + "uuid text, \n"
+                    + "username text, \n"
+                    + "duration int, \n"
+                    + "staffName text, \n"
+                    + "time text, \n"
+                    + "reason text \n"
+                    + ");";
 
                 Statement stmt = conn.createStatement();
                 stmt.execute(sql);
@@ -87,7 +102,7 @@ public class PunishmentDatabase {
                     try{
                         file.createNewFile();
                     }catch (IOException e){
-                        System.out.println(ChatColor.YELLOW + "[Simple-Ticket]: "+ e.toString());
+                        Bukkit.getLogger().warning(e.toString());
                     }
                 }
 
@@ -98,13 +113,13 @@ public class PunishmentDatabase {
                 LocalDateTime timeExpired;
 
                 if(duration >=86400){
-                     timeExpired = myDateObj.plusDays(duration/(24*3600));
+                    timeExpired = myDateObj.plusDays(duration/(24*3600));
                 }
                 else {
-                     timeExpired = myDateObj.plusSeconds(duration);
+                    timeExpired = myDateObj.plusSeconds(duration);
                 }
 
-                String addsql = "INSERT INTO punishments(UUID, name, duration, staffName, time, reason) VALUES(?,?,?,?,?,?)";
+                String addsql = "INSERT INTO simpleticket_punishments(uuid, username, duration, staffName, time, reason) VALUES(?,?,?,?,?,?)";
 
                 PreparedStatement ps = conn.prepareStatement(addsql);
                 ps.setString(1, player.getUniqueId().toString());
@@ -121,13 +136,11 @@ public class PunishmentDatabase {
                 user.save(file);
 
                 ps.close();
-                conn.close();
-
+            }catch (SQLException | IOException e){
+                Bukkit.getLogger().warning(e.toString());
             }
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
         }
     }
 
@@ -145,7 +158,7 @@ public class PunishmentDatabase {
         try {
             f.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Bukkit.getLogger().warning(e.toString());
         }
     }
 
@@ -171,8 +184,6 @@ public class PunishmentDatabase {
 
             long diff = currentTime.until(ldt, ChronoUnit.SECONDS);
 
-            System.out.println(diff + " " +key);
-
             if (diff > 0) {
                 playersToRemove.add(UUID.fromString(key));
             }
@@ -193,64 +204,63 @@ public class PunishmentDatabase {
      * @return ArrayList<String>
      */
     public static ArrayList<String> getPlayerHist(UUID uuid){
-        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
-        String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
         ArrayList<String> hist = new ArrayList<>();
 
-        try(Connection conn = DriverManager.getConnection(location)){
-
-
-
             if(conn != null){
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM punishments WHERE UUID = ?");
-                stmt.setString(1, uuid.toString());
+                try{
+                    PreparedStatement stmt = conn.prepareStatement("SELECT * FROM simpleticket_punishments WHERE uuid = ?;");
+                    //String SQL = "SELECT * FROM simpleticket_punishments WHERE uuid = '"+uuid.toString();
+                    stmt.setString(1, uuid.toString());
+                    ResultSet rs = stmt.executeQuery();
 
-                ResultSet rs = stmt.executeQuery();
-
-                if(!rs.next()){
-                    String res = "\n" + ChatColor.GREEN + "No Hist Found!";
-                    hist.add(res);
+                    if(!rs.next()){
+                        String res = "\n" + ChatColor.GREEN + "No Hist Found!";
+                        hist.add(res);
+                    }
+                    else{
+                        do{
+                            Bukkit.broadcastMessage("Result: " + rs.getString("username"));
+                            String res;
+                            res = ChatColor.GREEN + "Name: " + ChatColor.WHITE + rs.getString("username") + ChatColor.GREEN
+                                    + "\nDuration: " + ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) + ChatColor.GREEN
+                                    + "\nStaff: " + ChatColor.WHITE + rs.getString("staffName") + ChatColor.GREEN
+                                    + "\nPunished: " + ChatColor.WHITE + LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ChatColor.GREEN
+                                    + "\nReason: " + ChatColor.WHITE + rs.getString("reason");
+                            hist.add(res);
+                        } while(rs.next());
+                        }
+                    rs.close();
+                    stmt.close();
+                    } catch (SQLException e){
+                        Bukkit.getLogger().warning(Arrays.toString(e.getStackTrace()));
+                        hist.add("DB Error");
                 }
-
-                while(rs.next()){
-                    String res;
-                    res = String.format(String.format(ChatColor.GREEN+ "Name: "+ChatColor.WHITE + rs.getString("name") +ChatColor.GREEN
-                            + "\nDuration: " +ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) +ChatColor.GREEN
-                            + "\nStaff: " +ChatColor.WHITE + rs.getString("staffName") +ChatColor.GREEN
-                            + "\nPunished: " +ChatColor.WHITE+ LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))) +ChatColor.GREEN
-                            + "\nReason: " +ChatColor.WHITE +rs.getString("reason"));
-                    hist.add(res);
-                }
-
-
-                rs.close();
-                stmt.close();
-                conn.close();
-
-                return hist;
             }
-        }catch (SQLException e){
-            System.out.println("[Simple-Ticket] SQL ERROR "+ e);
-            hist.add("DB Error");
+            else{
+                hist.add("DB Error: Database connection Failed!");
+            }
             return hist;
         }
-        return null;
-    }
 
     public static void clearPlayerHistory(UUID uuid){
-        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
-        String location = "jdbc:sqlite:"+dir.toString()+"\\SimpleTicket.db";
-        try(Connection conn = DriverManager.getConnection(location)){
-
+        try{
             if(conn != null){
-                String sql = "DELETE FROM punishments WHERE UUID = "+'"'+uuid.toString()+'"';
-                Statement stmt = conn.createStatement();
-                stmt.execute(sql);
+                String sql = "DELETE FROM simpleticket_punishments WHERE UUID = ?;";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, uuid.toString());
+                stmt.executeUpdate();
                 stmt.close();
-                conn.close();
             }
         }catch (SQLException e){
-            System.out.println("[Simple-Ticket] SQL ERROR "+ e);
+            Bukkit.getLogger().warning(e.toString());
+        }
+    }
+
+    public static void closeConn(){
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            Bukkit.getLogger().warning(e.toString());
         }
     }
 
