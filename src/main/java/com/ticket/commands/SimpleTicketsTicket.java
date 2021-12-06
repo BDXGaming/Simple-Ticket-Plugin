@@ -96,7 +96,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 Ticket t = Ticket.getTicket(args[1]);
                                 player.sendMessage(t.getMsgLog());
                                 return true;
-                            } catch (NullPointerException e) {
+                            } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                                 player.sendMessage(ChatColor.RED + "There are no open tickets at this time!");
                                 return true;
                             }
@@ -134,6 +134,9 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 t.addmsg(msg.toString());
                                 return true;
                             }
+                        }
+                        else{
+                            sender.sendMessage(ChatColor.RED + "Invalid Command use! /"+label+"<message/subcommand>");
                         }
                     }
 
