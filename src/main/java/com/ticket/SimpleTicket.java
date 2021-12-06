@@ -6,8 +6,12 @@ import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.SQLException;
+import java.util.Arrays;
 
 
 public class SimpleTicket extends JavaPlugin{
@@ -21,15 +25,15 @@ public class SimpleTicket extends JavaPlugin{
         //Sets the instance of the plugin to the running plugin
         simpleTicket = this;
 
-        //Creates a database if it does not exist
-        PunishmentDatabase.createDatabase();
-
         //Checks for users who need to be removed from the active moderations list
         Punishment.checkPunishedPlayers();
 
         //This sets up the config file the first time that the plugin is run
         SimpleTicketConfig.setup();
         statusController = new StatusController();
+
+        //Creates a database if it does not exist
+        try { PunishmentDatabase.createDatabase(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }
 
         //The classes that are used in the commandExecuters
         SimpleTicketNewTicket nt = new SimpleTicketNewTicket();
@@ -58,6 +62,9 @@ public class SimpleTicket extends JavaPlugin{
 
     @Override
     public void onDisable(){
+
+        //Closes the Database Connection
+        PunishmentDatabase.closeConn();
 
         //Prints a message to console when the plugin is disabled
         getServer().getConsoleSender().sendMessage(ChatColor.RED +"[Simple Ticket] Plugin is disabled");
