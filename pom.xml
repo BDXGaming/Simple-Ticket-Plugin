@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ticket</groupId>
-    <artifactId>SimpleTicket</artifactId>
-    <version>0.7.2</version>
+    <artifactId>Simple-Ticket</artifactId>
+    <version>0.8.1</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -27,7 +27,40 @@
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.1</version>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.ticket</pattern>
+                                    <shadedPattern>com.ticket</shadedPattern>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     
 </project>
