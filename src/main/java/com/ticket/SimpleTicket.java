@@ -25,15 +25,15 @@ public class SimpleTicket extends JavaPlugin{
         //Sets the instance of the plugin to the running plugin
         simpleTicket = this;
 
-        //Checks for users who need to be removed from the active moderations list
-        Punishment.checkPunishedPlayers();
-
         //This sets up the config file the first time that the plugin is run
         SimpleTicketConfig.setup();
         statusController = new StatusController();
 
         //Creates a database if it does not exist
         try { PunishmentDatabase.createDatabaseConnection(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }
+
+        //Checks for users who need to be removed from the active moderations list
+        Punishment.checkPunishedPlayers();
 
         //The classes that are used in the commandExecuters
         SimpleTicketNewTicket nt = new SimpleTicketNewTicket();

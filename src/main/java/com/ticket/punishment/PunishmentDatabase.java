@@ -59,9 +59,19 @@ public class PunishmentDatabase {
                     + "reason text \n"
                     + ");";
 
+            String sql2 = "CREATE TABLE IF NOT EXISTS simpleticket_active_punishments (\n"
+                    + "uuid text, \n"
+                    + "username text, \n"
+                    + "time text \n"
+                    + ");";
+
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
             stmt.close();
+
+            Statement stmt2 = conn.createStatement();
+            stmt2.execute(sql2);
+            stmt2.close();
 
         }
     }
@@ -90,24 +100,6 @@ public class PunishmentDatabase {
                 stmt.execute(sql);
                 stmt.close();
 
-                File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
-
-                if(!users.exists()){
-                    users.mkdir();
-                }
-
-                File file = new File(users, "activePunishments.yml");
-
-                if(!(file.exists())){
-                    try{
-                        file.createNewFile();
-                    }catch (IOException e){
-                        Bukkit.getLogger().warning(e.toString());
-                    }
-                }
-
-                FileConfiguration user = YamlConfiguration.loadConfiguration(file);
-
                 LocalDateTime myDateObj = LocalDateTime.now();
 
                 LocalDateTime timeExpired;
@@ -129,13 +121,41 @@ public class PunishmentDatabase {
                 ps.setString(5, timeExpired.toString());
                 ps.setString(6, reason);
 
+                if(!SimpleTicket.statusController.REMOTE_DB){
+                    File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
+
+                    if(!users.exists()){
+                        users.mkdir();
+                    }
+
+                    File file = new File(users, "activePunishments.yml");
+
+                    if(!(file.exists())){
+                        try{
+                            file.createNewFile();
+                        }catch (IOException e){
+                            Bukkit.getLogger().warning(e.toString());
+                        }
+                    }
+
+                    FileConfiguration user = YamlConfiguration.loadConfiguration(file);
+                    user.addDefault(player.getUniqueId().toString(),timeExpired.toString());
+                    user.options().copyDefaults(true);
+                    user.save(file);
+                }else{
+                    String activeSQL = "INSERT INTO simpleticket_active_punishments(uuid, username, time) VALUES(?,?,?)";
+                    PreparedStatement ps2 = conn.prepareStatement(activeSQL);
+                    ps2.setString(1, player.getUniqueId().toString());
+                    ps2.setString(2, player.getName());
+                    ps2.setString(3, timeExpired.toString());
+
+                    ps2.executeUpdate();
+                    ps2.close();
+                }
+
                 ps.executeUpdate();
-
-                user.addDefault(player.getUniqueId().toString(),timeExpired.toString());
-                user.options().copyDefaults(true);
-                user.save(file);
-
                 ps.close();
+
             }catch (SQLException | IOException e){
                 Bukkit.getLogger().warning(e.toString());
             }
@@ -149,16 +169,31 @@ public class PunishmentDatabase {
      * @param uuid String
      */
     public static void setInactive(String uuid){
-        File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
-        File file = new File(users, "activePunishments.yml");
 
-        FileConfiguration f = YamlConfiguration.loadConfiguration(file);
+        if(!SimpleTicket.statusController.REMOTE_DB){
+            File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
+            File file = new File(users, "activePunishments.yml");
 
-        f.set(uuid, null);
-        try {
-            f.save(file);
-        } catch (IOException e) {
-            Bukkit.getLogger().warning(e.toString());
+            FileConfiguration f = YamlConfiguration.loadConfiguration(file);
+
+            f.set(uuid, null);
+            try {
+                f.save(file);
+            } catch (IOException e) {
+                Bukkit.getLogger().warning(e.toString());
+            }
+        }else{
+            String SQLStament = "DELETE FROM simpleticket_active_punishments WHERE uuid = ?";
+            try {
+                PreparedStatement ps = conn.prepareStatement(SQLStament);
+                ps.setString(1, uuid);
+                ps.executeUpdate();
+
+                ps.close();
+
+            } catch (SQLException throwables) {
+                Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
+            }
         }
     }
 
@@ -168,34 +203,78 @@ public class PunishmentDatabase {
      */
     public static ArrayList<UUID> getActivePunishments() {
 
-        File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
-        File file = new File(users, "activePunishments.yml");
 
-        ArrayList<UUID> playersToRemove = new ArrayList<>();
+        if(!SimpleTicket.statusController.REMOTE_DB){
+            File users = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()+"/users");
+            File file = new File(users, "activePunishments.yml");
 
-        FileConfiguration f = YamlConfiguration.loadConfiguration(file);
+            ArrayList<UUID> playersToRemove = new ArrayList<>();
 
-        for(String key: f.getKeys(true)){
-            String t = f.getString(key);
-            assert t != null;
-            LocalDateTime ldt = LocalDateTime.parse(t);
+            FileConfiguration f = YamlConfiguration.loadConfiguration(file);
 
-            LocalDateTime currentTime = LocalDateTime.now();
+            for(String key: f.getKeys(true)){
+                String t = f.getString(key);
+                assert t != null;
+                LocalDateTime ldt = LocalDateTime.parse(t);
 
-            long diff = currentTime.until(ldt, ChronoUnit.SECONDS);
+                LocalDateTime currentTime = LocalDateTime.now();
 
-            if (diff > 0) {
-                playersToRemove.add(UUID.fromString(key));
+                long diff = currentTime.until(ldt, ChronoUnit.SECONDS);
+
+                if (diff > 0) {
+                    playersToRemove.add(UUID.fromString(key));
+                }
+
+                else if (diff <0){
+                    setInactive(f.getString(key));
+                }
+
             }
 
-            else if (diff <0){
-                setInactive(f.getString(key));
+
+            return playersToRemove;
+        }else{
+            String sql = "SELECT * FROM simpleticket_active_punishments;";
+            ArrayList<UUID> activePunishments = new ArrayList<>();
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery();
+
+                if(!rs.next()){
+                    return activePunishments;
+                }
+                else{
+                    do{
+                        String t = rs.getString("time");
+                        assert t != null;
+                        LocalDateTime ldt = LocalDateTime.parse(t);
+
+                        LocalDateTime currentTime = LocalDateTime.now();
+
+                        long diff = currentTime.until(ldt, ChronoUnit.SECONDS);
+
+                        if (diff > 0) {
+                            activePunishments.add(UUID.fromString(rs.getString("uuid")));
+                        }
+
+                        else if (diff <0){
+                            setInactive(rs.getString("uuid"));
+                        }
+
+                    } while(rs.next());
+                }
+
+                rs.close();
+                stmt.close();
+
+                return activePunishments;
+
+            } catch (SQLException throwables) {
+                Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
             }
 
         }
-
-
-        return playersToRemove;
+        return null;
     }
 
     /**
@@ -219,7 +298,6 @@ public class PunishmentDatabase {
                     }
                     else{
                         do{
-                            Bukkit.broadcastMessage("Result: " + rs.getString("username"));
                             String res;
                             res = ChatColor.GREEN + "Name: " + ChatColor.WHITE + rs.getString("username") + ChatColor.GREEN
                                     + "\nDuration: " + ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) + ChatColor.GREEN
@@ -228,7 +306,7 @@ public class PunishmentDatabase {
                                     + "\nReason: " + ChatColor.WHITE + rs.getString("reason");
                             hist.add(res);
                         } while(rs.next());
-                        }
+                    }
                     rs.close();
                     stmt.close();
                     } catch (SQLException e){
