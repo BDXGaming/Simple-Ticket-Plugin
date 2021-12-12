@@ -23,15 +23,19 @@ public class ViewActivePunishmentCommands implements CommandExecutor {
 
             ArrayList<UUID> playerspunished = PunishmentDatabase.getActivePunishments();
 
-            String res = ChatColor.YELLOW+"\nActive SimpleTicket Punishments \n \n"+ChatColor.GREEN;
+            StringBuilder res = new StringBuilder(ChatColor.YELLOW + "\nActive SimpleTicket Punishments \n \n" + ChatColor.GREEN);
 
             if(playerspunished != null){
-                for(UUID id: playerspunished){
-                    OfflinePlayer p = Bukkit.getOfflinePlayer(id);
-                    res += "  Name: "+ p.getName() + "\n  UUID: " + id.toString() +"\n \n";
+                if(playerspunished.size() < 1){
+                    res.append("No active Punishments Found!");
+                }else{
+                    for(UUID id: playerspunished){
+                        OfflinePlayer p = Bukkit.getOfflinePlayer(id);
+                        res.append(ChatColor.GREEN).append("  Name: ").append(ChatColor.WHITE).append(p.getName()).append(ChatColor.GREEN).append("\n  UUID: ").append(ChatColor.WHITE).append(id.toString()).append("\n \n");
+                    }
                 }
             }
-            sender.sendMessage(res);
+            sender.sendMessage(res.toString());
             return true;
         }
         return false;
