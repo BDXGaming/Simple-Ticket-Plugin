@@ -13,6 +13,7 @@ public class StatusController {
     public String address;
     public String password;
     public boolean REMOTE_DB;
+    public boolean PUNISHMENT_SYNC;
 
     public StatusController() {
         this.SUGGESTED_REASON = SimpleTicketConfig.get().getString("SuggestedReason");
@@ -27,6 +28,7 @@ public class StatusController {
         }else{
             this.REMOTE_DB = false;
         }
+        this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
     }
 
     public void reload(){
@@ -42,6 +44,7 @@ public class StatusController {
         }else{
             this.REMOTE_DB = false;
         }
+        this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
     }
 
 }
