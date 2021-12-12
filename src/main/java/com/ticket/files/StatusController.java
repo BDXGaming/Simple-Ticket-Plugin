@@ -39,8 +39,9 @@ public class StatusController {
         this.password = (SimpleTicketConfig.get().getString("password"));
         if(!this.sqlDataBaseType.equalsIgnoreCase("sqlite")){
             this.REMOTE_DB = true;
+        }else{
+            this.REMOTE_DB = false;
         }
-        this.REMOTE_DB = false;
     }
 
 }
