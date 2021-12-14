@@ -1,5 +1,7 @@
 package com.ticket.files;
 
+import com.ticket.SimpleTicket;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class StatusController {
     public String password;
     public boolean REMOTE_DB;
     public boolean PUNISHMENT_SYNC;
+    public boolean VAULT;
 
     public StatusController() {
         this.SUGGESTED_REASON = SimpleTicketConfig.get().getString("SuggestedReason");
@@ -29,6 +32,7 @@ public class StatusController {
             this.REMOTE_DB = false;
         }
         this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
+        this.VAULT = SimpleTicketConfig.get().getBoolean("useVault");
     }
 
     public void reload(){
@@ -45,6 +49,7 @@ public class StatusController {
             this.REMOTE_DB = false;
         }
         this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
+        this.VAULT = SimpleTicketConfig.get().getBoolean("useVault");
     }
 
 }

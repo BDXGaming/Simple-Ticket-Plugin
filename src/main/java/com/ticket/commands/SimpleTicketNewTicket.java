@@ -6,6 +6,7 @@ import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
+import com.ticket.utils.playerName;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -41,7 +42,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
 
                         if(!event.isCancelled()){
                             player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                            Bukkit.broadcast(player.getDisplayName() + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
+                            Bukkit.broadcast(playerName.getPlayerName(player) + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
                         }
 
                         return true;

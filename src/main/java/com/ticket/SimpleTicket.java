@@ -6,8 +6,10 @@ import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ public class SimpleTicket extends JavaPlugin{
 
     public static SimpleTicket simpleTicket;
     public static StatusController statusController;
+    public static Chat chat;
 
     @Override
     public void onEnable(){
@@ -28,6 +31,16 @@ public class SimpleTicket extends JavaPlugin{
         //This sets up the config file the first time that the plugin is run
         SimpleTicketConfig.setup();
         statusController = new StatusController();
+
+        //Gets the Vault Chat dependency
+        if(statusController.VAULT){
+            RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+            if (rsp != null) {
+                chat = rsp.getProvider();
+                Bukkit.getConsoleSender().sendMessage("[Simple-Ticket]: Vault has been loaded!");
+            }
+        }
+
 
         //Creates a database if it does not exist
         try { PunishmentDatabase.createDatabaseConnection(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }

@@ -4,6 +4,7 @@ import com.ticket.events.ticketClaimEvent;
 import com.ticket.events.ticketCloseEvent;
 import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
+import com.ticket.utils.playerName;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -64,7 +65,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
 
                                     return true;
                                 } else {
-                                    player.sendMessage("§cThis ticket is already claimed by: " + t.getStaffClaimer().getDisplayName());
+                                    player.sendMessage("§cThis ticket is already claimed by: " + playerName.getPlayerName(t.getStaffClaimer()));
                                     return true;
                                 }
                             } else {
@@ -104,7 +105,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         else if (Ticket.hasClaim(player)) {
                             try {
                                 Ticket t = Ticket.getClaim(player);
-                                StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + player.getDisplayName() + "§a):§d ");
+                                StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + playerName.getPlayerName(player) + "§a):§d ");
                                 for (int i = 0; i < args.length; i++) {
                                     msg.append(args[i]).append(" ");
                                 }
@@ -119,7 +120,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         }
                         else if(Ticket.hasTicket(player)){
                             Ticket t = Ticket.getTicket(player);
-                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a (" + player.getDisplayName() + "§a):§d ");
+                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a (" + playerName.getPlayerName(player) + "§a):§d ");
                             for (int i = 0; i < args.length; i++) {
                                 msg.append(args[i]).append(" ");
                             }
@@ -148,7 +149,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                     try {
                         if (Ticket.hasTicket(player)) {
                             Ticket t = Ticket.getTicket(player);
-                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + player.getDisplayName() + "§a):§d ");
+                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + playerName.getPlayerName(player) + "§a):§d ");
                             for (int i = 0; i < args.length; i++) {
                                 msg.append(args[i]).append(" ");
                             }
