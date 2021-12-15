@@ -32,7 +32,7 @@ public class StatusController {
             this.REMOTE_DB = false;
         }
         this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
-        this.VAULT = true;
+        this.VAULT = SimpleTicketConfig.get().getBoolean("useVault");
     }
 
     public void reload(){
@@ -49,7 +49,7 @@ public class StatusController {
             this.REMOTE_DB = false;
         }
         this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
-        this.VAULT = true;
+        this.VAULT = SimpleTicketConfig.get().getBoolean("useVault");
     }
 
 }
