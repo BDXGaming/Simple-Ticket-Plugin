@@ -42,7 +42,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
 
                         if(!event.isCancelled()){
                             player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                            Bukkit.broadcast(playerName.getPlayerName(player) + " §c Has Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
+                            Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+playerName.getPlayerName(player) +ChatColor.RED+ " Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
                         }
 
                         return true;
