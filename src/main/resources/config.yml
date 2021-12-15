@@ -32,6 +32,10 @@ SuggestedReason: Ticket Abuse
 #All servers connected to same database will have the same punishments
 syncPunishmentOnJoin: false
 
+#Vault Displayname Support
+#When use names will appear as follows {prefix}{username}{suffix}
+useVault: true
+
 #The message that a user sees when they open a new ticket
 FirstMessage: |2-
 
