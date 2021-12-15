@@ -20,14 +20,9 @@ public class SimpleTicketConfig {
 
         //Ensures that the config exists
         SimpleTicket.simpleTicket.saveDefaultConfig();
-        File dir =  Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
 
         InputStream inputStream = SimpleTicket.simpleTicket.getResource("config.yml");
         File target = new File(String.valueOf(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder()));
-
-        if(!target.exists()){
-            target.mkdir();
-        }
 
         File file = new File(target, "template.yml");
         try {
@@ -43,7 +38,6 @@ public class SimpleTicketConfig {
                 }
             }
 
-            //template.save(file);
             file.delete();
             customfile = template;
 
