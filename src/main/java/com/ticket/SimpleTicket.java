@@ -1,7 +1,10 @@
 package com.ticket;
+
 import com.ticket.commands.*;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.StatusController;
+import com.ticket.files.TicketConstants;
+import com.ticket.handlers.bungeeChannelListener;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
@@ -11,12 +14,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.sql.SQLException;
-import java.util.Arrays;
 
-
-public class SimpleTicket extends JavaPlugin{
+public class SimpleTicket extends JavaPlugin {
 
     public static SimpleTicket simpleTicket;
     public static StatusController statusController;
@@ -34,13 +34,21 @@ public class SimpleTicket extends JavaPlugin{
 
         //Gets the Vault Chat dependency
         if(statusController.VAULT){
-            RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-            if (rsp != null) {
-                chat = rsp.getProvider();
-                Bukkit.getConsoleSender().sendMessage("[Simple-Ticket]: Vault has been loaded!");
+            try{
+                RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+                if (rsp != null) {
+                    chat = rsp.getProvider();
+                    Bukkit.getConsoleSender().sendMessage("[Simple-Ticket]: Vault has been loaded!");
+                }
+            }catch (NoClassDefFoundError e){
+                Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[SimpleTicket]: Vault not found!");
+                statusController.VAULT = false;
             }
+
         }
 
+        //Checks if the server is connected to a BungeeCord Proxy (Or is configured to)
+        checkBungeeCordStatus();
 
         //Creates a database if it does not exist
         try { PunishmentDatabase.createDatabaseConnection(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }
@@ -51,6 +59,10 @@ public class SimpleTicket extends JavaPlugin{
         //The classes that are used in the commandExecuters
         SimpleTicketNewTicket nt = new SimpleTicketNewTicket();
         SimpleTicketsTicket tic = new SimpleTicketsTicket();
+
+        //Register Plugin message channels
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, TicketConstants.BUNGEE_CHANNEL);
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, TicketConstants.BUNGEE_CHANNEL, new bungeeChannelListener());
 
         //All the commands are assigned executors here
         getCommand("ticket").setExecutor(tic);
@@ -79,9 +91,20 @@ public class SimpleTicket extends JavaPlugin{
         //Closes the Database Connection
         PunishmentDatabase.closeConn();
 
+        //Removes the BungeeMessageChannel listeners and senders
+        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
+
         //Prints a message to console when the plugin is disabled
         getServer().getConsoleSender().sendMessage(ChatColor.RED +"[Simple Ticket] Plugin is disabled");
 
     }//Closes onDisable
 
+    private void checkBungeeCordStatus()
+    {
+        if (!getServer().spigot().getConfig().getConfigurationSection("settings").getBoolean( "settings.bungeecord" ) )
+        {
+            statusController.BUNGEE = false;
+        }
+    }
 }

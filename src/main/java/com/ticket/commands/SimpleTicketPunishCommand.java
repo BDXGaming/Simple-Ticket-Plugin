@@ -4,6 +4,7 @@ import com.ticket.events.PunishEvent;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
+import com.ticket.utils.chat;
 import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,7 +47,8 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                                 }
 
                                 new Punishment(p, time, player, modReason);
-                                Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1], "ticket.ticket.staff");
+                                Punishment.sendPunishmentSync();
+                                chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1]);
                             }
 
 
@@ -65,7 +67,8 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                                 }
 
                                 new Punishment(p, time, player);
-                                Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + player.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ timeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")), "ticket.ticket.staff");
+                                Punishment.sendPunishmentSync();
+                                chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + player.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ timeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")));
                             }
 
 

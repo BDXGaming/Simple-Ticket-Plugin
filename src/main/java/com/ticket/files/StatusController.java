@@ -17,6 +17,7 @@ public class StatusController {
     public boolean REMOTE_DB;
     public boolean PUNISHMENT_SYNC;
     public boolean VAULT;
+    public boolean BUNGEE;
 
     public StatusController() {
         this.SUGGESTED_REASON = SimpleTicketConfig.get().getString("SuggestedReason");
@@ -33,6 +34,7 @@ public class StatusController {
         }
         this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
         this.VAULT = SimpleTicketConfig.get().getBoolean("useVault");
+        this.BUNGEE = SimpleTicketConfig.get().getBoolean("useBungee");
     }
 
     public void reload(){
@@ -50,6 +52,7 @@ public class StatusController {
         }
         this.PUNISHMENT_SYNC = SimpleTicketConfig.get().getBoolean("syncPunishmentOnJoin");
         this.VAULT = SimpleTicketConfig.get().getBoolean("useVault");
+        this.BUNGEE = SimpleTicketConfig.get().getBoolean("useBungee");
     }
 
 }

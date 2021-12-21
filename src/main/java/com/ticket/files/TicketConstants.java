@@ -14,4 +14,13 @@ public class TicketConstants {
     /** Permission required to clear a player's ticket moderation history*/
     public static final String TICKET_HIST_CLEAR_PERM = "ticket.ticket.staff.clearhist";
 
+    /** The BungeeCord plugin message Channel*/
+    public static final String BUNGEE_CHANNEL = "BungeeCord";
+
+    /** The Plugin message Channel */
+    public static final String PLUGIN_CHANNEL = "SimpleTicket";
+
+    /** The channel where a sync request is sent to update the punishments of all servers with online members*/
+    public static final String PLUGIN_PUNISHMENT_UPDATE_CHANNEL = "SimpleTicket:Punishment";
+
 }

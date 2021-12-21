@@ -190,6 +190,10 @@ public class Ticket{
      */
     public static String getAllTickets(){
         StringBuilder msg = new StringBuilder(ChatColor.translateAlternateColorCodes('&',"\n&e&lCurrent Tickets \n \n"));
+
+        if(tickets.isEmpty()){
+            msg.append(ChatColor.GREEN).append("No Open Tickets!");
+        }
         for (Ticket t: tickets){
 
             if(t.getStaffClaimer() != null){

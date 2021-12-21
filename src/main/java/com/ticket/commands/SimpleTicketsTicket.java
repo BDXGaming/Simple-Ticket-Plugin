@@ -4,6 +4,7 @@ import com.ticket.events.ticketClaimEvent;
 import com.ticket.events.ticketCloseEvent;
 import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
+import com.ticket.utils.chat;
 import com.ticket.utils.playerName;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -60,7 +61,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
 
                                     if(!event.isCancelled()){
                                         t.claimTicket(player);
-                                        Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE + player.getName() + ChatColor.GREEN+" claimed Ticket-"+ t.getNum(), "ticket.ticket.staff");
+                                        chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE + player.getName() + ChatColor.GREEN+" claimed Ticket-"+ t.getNum());
                                     }
 
                                     return true;
@@ -125,7 +126,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 msg.append(args[i]).append(" ");
                             }
                             if (!(t.isClaimed())) {
-                                Bukkit.broadcast(msg.toString(), TicketConstants.TICKET_STAFF_PERM);
+                                chat.broadcast(msg.toString());
                                 t.addmsg(msg.toString());
                                 return true;
                             } else {
@@ -155,7 +156,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                             }
                             if (!(t.isClaimed())) {
                                 player.sendMessage(msg.toString());
-                                Bukkit.broadcast(msg.toString(), "ticket.ticket.staff");
+                                chat.broadcast(msg.toString());
                                 t.addmsg(msg.toString());
                                 return true;
                             } else {

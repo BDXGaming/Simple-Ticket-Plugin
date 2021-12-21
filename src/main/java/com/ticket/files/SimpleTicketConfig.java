@@ -53,8 +53,7 @@ public class SimpleTicketConfig {
     }
 
     public static void reload(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket").getDataFolder(), "config.yml");
-        customfile = YamlConfiguration.loadConfiguration(file);
+        setup();
     }
 
 }

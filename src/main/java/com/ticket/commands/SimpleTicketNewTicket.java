@@ -6,8 +6,7 @@ import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
-import com.ticket.utils.playerName;
-import org.bukkit.Bukkit;
+import com.ticket.utils.chat;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -42,7 +41,7 @@ public class SimpleTicketNewTicket implements CommandExecutor {
 
                         if(!event.isCancelled()){
                             player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                            Bukkit.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+playerName.getPlayerName(player) +ChatColor.RED+ " Opened Ticket-" + t.getNum(), "ticket.ticket.staff");
+                            chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE+player.getName() +ChatColor.GREEN+ " Opened Ticket-" + t.getNum());
                         }
 
                         return true;
