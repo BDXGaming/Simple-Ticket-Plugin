@@ -1,12 +1,9 @@
 name: Simple-Ticket
 version: ${project.version}
 author: BDX____
-main: com.ticket.SimpleTicket
-api-version: 1.16
-softdepend: [Vault]
+main: com.ticket.SimpleTicketBungee
 
 commands:
-
   newticket:
     description: Opens a Ticket
     usage: /<command>
