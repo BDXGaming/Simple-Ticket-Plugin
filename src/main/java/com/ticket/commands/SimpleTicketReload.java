@@ -4,6 +4,7 @@ import com.ticket.SimpleTicket;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.PunishmentDatabase;
+import com.ticket.utils.LoggerControl;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -30,7 +31,7 @@ public class SimpleTicketReload implements CommandExecutor {
                 try {
                     PunishmentDatabase.createDatabaseConnection();
                 } catch (SQLException throwables) {
-                    Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
+                    LoggerControl.warning(Arrays.toString(throwables.getStackTrace()));
                 }
                 sender.sendMessage(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ChatColor.GREEN+"Reload Complete");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ChatColor.GREEN+"Reload Complete");
@@ -45,7 +46,7 @@ public class SimpleTicketReload implements CommandExecutor {
             try {
                 PunishmentDatabase.createDatabaseConnection();
             } catch (SQLException throwables) {
-                Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
+                LoggerControl.warning(Arrays.toString(throwables.getStackTrace()));
             }
             sender.sendMessage(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ChatColor.GREEN+"Reload Complete");
             return true;

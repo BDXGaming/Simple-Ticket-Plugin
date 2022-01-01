@@ -9,6 +9,7 @@ import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
 import com.ticket.tabcomplete.SimpleTicketTabComplete;
+import com.ticket.utils.LoggerControl;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,6 +25,9 @@ public class SimpleTicket extends JavaPlugin {
 
     @Override
     public void onEnable(){
+
+        //Sets the logging instance to the Spigot logger
+        LoggerControl.setLogger(this.getLogger());
 
         //Sets the instance of the plugin to the running plugin
         simpleTicket = this;
@@ -51,7 +55,7 @@ public class SimpleTicket extends JavaPlugin {
         checkBungeeCordStatus();
 
         //Creates a database if it does not exist
-        try { PunishmentDatabase.createDatabaseConnection(); } catch (SQLException throwables) { Bukkit.getLogger().warning(throwables.toString()); }
+        try { PunishmentDatabase.createDatabaseConnection(); } catch (SQLException throwables) { LoggerControl.warning(throwables.toString()); }
 
         //Checks for users who need to be removed from the active moderations list
         Punishment.checkPunishedPlayers();

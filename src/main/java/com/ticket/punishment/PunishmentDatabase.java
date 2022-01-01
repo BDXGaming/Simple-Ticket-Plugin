@@ -2,6 +2,7 @@ package com.ticket.punishment;
 
 import com.ticket.SimpleTicket;
 import com.ticket.files.SimpleTicketConfig;
+import com.ticket.utils.LoggerControl;
 import com.ticket.utils.timeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,15 +29,16 @@ public class PunishmentDatabase {
      * Creates the SQLite database file if none exists, adds table with given rows
      */
     public static void createDatabaseConnection() throws SQLException {
-        File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
         String location ="";
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            Bukkit.getLogger().warning(e.toString());
+            LoggerControl.warning(e.toString());
         }
 
         if(SimpleTicket.statusController.sqlDataBaseType.equalsIgnoreCase("sqlite")){
+            File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
+
             location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
             conn = DriverManager.getConnection(location);
 
@@ -134,7 +136,7 @@ public class PunishmentDatabase {
                         try{
                             file.createNewFile();
                         }catch (IOException e){
-                            Bukkit.getLogger().warning(e.toString());
+                            LoggerControl.warning(e.toString());
                         }
                     }
 
@@ -157,7 +159,7 @@ public class PunishmentDatabase {
                 ps.close();
 
             }catch (SQLException | IOException e){
-                Bukkit.getLogger().warning(e.toString());
+                LoggerControl.warning(e.toString());
             }
 
 
@@ -180,7 +182,7 @@ public class PunishmentDatabase {
             try {
                 f.save(file);
             } catch (IOException e) {
-                Bukkit.getLogger().warning(e.toString());
+                LoggerControl.warning(e.toString());
             }
         }else{
             String SQLStament = "DELETE FROM simpleticket_active_punishments WHERE uuid = ?";
@@ -192,7 +194,7 @@ public class PunishmentDatabase {
                 ps.close();
 
             } catch (SQLException throwables) {
-                Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
+                LoggerControl.warning(Arrays.toString(throwables.getStackTrace()));
             }
         }
     }
@@ -270,7 +272,7 @@ public class PunishmentDatabase {
                 return activePunishments;
 
             } catch (SQLException throwables) {
-                Bukkit.getLogger().warning(Arrays.toString(throwables.getStackTrace()));
+                LoggerControl.warning(Arrays.toString(throwables.getStackTrace()));
             }
 
         }
@@ -310,7 +312,7 @@ public class PunishmentDatabase {
                     rs.close();
                     stmt.close();
                     } catch (SQLException e){
-                        Bukkit.getLogger().warning(Arrays.toString(e.getStackTrace()));
+                        LoggerControl.warning(Arrays.toString(e.getStackTrace()));
                         hist.add("DB Error");
                 }
             }
@@ -330,7 +332,7 @@ public class PunishmentDatabase {
                 stmt.close();
             }
         }catch (SQLException e){
-            Bukkit.getLogger().warning(e.toString());
+            LoggerControl.warning(e.toString());
         }
     }
 
@@ -338,7 +340,7 @@ public class PunishmentDatabase {
         try {
             conn.close();
         } catch (SQLException e) {
-            Bukkit.getLogger().warning(e.toString());
+            LoggerControl.warning(e.toString());
         }
     }
 
