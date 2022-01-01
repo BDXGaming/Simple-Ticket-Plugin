@@ -1,12 +1,9 @@
 package com.ticket.bungee.files;
 
-import com.ticket.files.SimpleTicketConfig;
-import com.ticket.files.Ticket;
+import com.ticket.bungee.config.SimpleTicketBungeeConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class BungeeTicket {
 
@@ -18,7 +15,7 @@ public class BungeeTicket {
     private static final ArrayList<ProxiedPlayer> players_with_tickets = new ArrayList<>();
     private static final ArrayList<ProxiedPlayer> staff_with_tickets = new ArrayList<>();
     private static int ticket_count = 0;
-    private String ticketLog = SimpleTicketConfig.get().getString("FirstMessage");
+    private String ticketLog = SimpleTicketBungeeConfig.get().getString("FirstMessage");
 
     public BungeeTicket(ProxiedPlayer player){
         ticket_count += 1;

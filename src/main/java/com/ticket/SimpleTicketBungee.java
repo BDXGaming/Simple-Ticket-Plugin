@@ -1,9 +1,6 @@
 package com.ticket;
 
-import com.ticket.bungee.commands.BungeePlayerHistCommand;
-import com.ticket.bungee.commands.BungeeRemovePunishment;
-import com.ticket.bungee.commands.ClearPlayerHistory;
-import com.ticket.bungee.commands.ViewActivePunishmentBungeeCommand;
+import com.ticket.bungee.commands.*;
 import com.ticket.bungee.config.BungeeStatusController;
 import com.ticket.bungee.config.SimpleTicketBungeeConfig;
 import com.ticket.bungee.punishment.BungeePunishment;
@@ -49,6 +46,10 @@ public class SimpleTicketBungee extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new ViewActivePunishmentBungeeCommand());
         getProxy().getPluginManager().registerCommand(this, new BungeePlayerHistCommand());
         getProxy().getPluginManager().registerCommand(this, new BungeeRemovePunishment());
+        getProxy().getPluginManager().registerCommand(this, new BungeeNewTicket());
+        getProxy().getPluginManager().registerCommand(this, new BungeePunishCommand());
+        getProxy().getPluginManager().registerCommand(this, new BungeeTicketsCommand());
+        getProxy().getPluginManager().registerCommand(this, new BungeeTicketCommand());
 
         getLogger().info("Plugin has loaded");
         getProxy().getConsole().sendMessage(new TextComponent("SimpleTicket For Bungee"));
