@@ -1,32 +1,23 @@
 package com.ticket.files;
 
 import com.ticket.SimpleTicket;
-import com.ticket.SimpleTicketBungee;
 import com.ticket.utils.LoggerControl;
-import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.util.Map;
 import java.util.Objects;
 
 public class SimpleTicketConfig {
 
     private static File file;
     private static FileConfiguration customfile;
-    private static Map<Object, Object> yaml;
 
     //Finds or generates config file thing
     public static void setup(){
 
-         yaml = null;
 
         //Ensures that the config exists
         SimpleTicket.simpleTicket.saveDefaultConfig();

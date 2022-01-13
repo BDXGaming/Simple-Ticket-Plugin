@@ -34,6 +34,7 @@ public class BungeePunishmentDatabase {
         String location ="";
         try {
             Class.forName("org.postgresql.Driver");
+            Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             LoggerControl.warning(e.toString());
         }
@@ -215,7 +216,18 @@ public class BungeePunishmentDatabase {
 
         if(!SimpleTicketBungee.bungeeStatusController.REMOTE_DB){
             File users = new File(SimpleTicketBungee.simpleTicketBungee.getDataFolder()+"/users");
+            if(!users.exists()){
+                users.mkdirs();
+            }
             File file = new File(users, "activePunishments.yml");
+            if(!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    LoggerControl.warning(e.toString());
+                }
+            }
+
 
             ArrayList<UUID> playersToRemove = new ArrayList<>();
 
@@ -226,6 +238,7 @@ public class BungeePunishmentDatabase {
                 LoggerControl.warning(e.toString());
             }
 
+            assert f != null;
             for(String key: f.getKeys()){
                 String t = f.getString(key);
                 assert t != null;

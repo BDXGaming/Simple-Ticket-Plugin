@@ -50,6 +50,7 @@ public class SimpleTicketBungee extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new BungeePunishCommand());
         getProxy().getPluginManager().registerCommand(this, new BungeeTicketsCommand());
         getProxy().getPluginManager().registerCommand(this, new BungeeTicketCommand());
+        getProxy().getPluginManager().registerCommand(this, new BungeeReloadCommand());
 
         getLogger().info("Plugin has loaded");
         getProxy().getConsole().sendMessage(new TextComponent("SimpleTicket For Bungee"));
