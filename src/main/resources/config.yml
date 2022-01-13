@@ -54,12 +54,13 @@ FirstMessage: |2-
 #  Options:
 #    Local Storage Options:
 #      => sqlite
+#      => local (BungeeCord Version ONLY)
 #
 #    Remote Storage Options:
 #      => postgresql
 #
 #  Defualt:
-#    => sqlite is the defualt option for data storage
+#    => sqlite is the default option for data storage
 database: sqlite
 
 #The following options under connection are only needed if you are using one of the remote storage options

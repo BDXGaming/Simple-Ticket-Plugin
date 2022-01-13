@@ -34,16 +34,16 @@ public class BungeePunishmentDatabase {
         String location ="";
         try {
             Class.forName("org.postgresql.Driver");
-            Class.forName("org.sqlite.JDBC");
+            Class.forName ("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             LoggerControl.warning(e.toString());
         }
 
-        if(SimpleTicketBungee.bungeeStatusController.sqlDataBaseType.equalsIgnoreCase("sqlite")){
-            File dir = SimpleTicketBungee.simpleTicketBungee.getDataFolder();
+        if(SimpleTicketBungee.bungeeStatusController.sqlDataBaseType.equalsIgnoreCase("sqlite") || SimpleTicketBungee.bungeeStatusController.sqlDataBaseType.equalsIgnoreCase("local")){
+            File dir = SimpleTicketBungee.simpleTicketBungee.getDataFolder().getAbsoluteFile();
 
-            location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
-            conn = DriverManager.getConnection(location);
+            location = "jdbc:h2:" + dir.toString() + "\\SimpleTicket";
+            conn = DriverManager.getConnection(location, "st", "test");
 
         }else if(SimpleTicketBungee.bungeeStatusController.sqlDataBaseType.equalsIgnoreCase("postgresql")){
             location = "jdbc:postgresql://"+SimpleTicketBungee.bungeeStatusController.address +"/"+SimpleTicketBungee.bungeeStatusController.databaseName;
