@@ -1,5 +1,5 @@
 name: Simple-Ticket
-version: ${project.version}
+version: 1.3.0
 author: BDX____
 main: com.ticket.SimpleTicketBungee
 
