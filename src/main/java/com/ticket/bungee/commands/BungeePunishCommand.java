@@ -7,7 +7,7 @@ import com.ticket.bungee.punishment.BungeePunishment;
 import com.ticket.files.TicketConstants;
 import com.ticket.utils.BungeeHelper;
 import com.ticket.utils.MojangPlayerHelper;
-import com.ticket.utils.timeConverters;
+import com.ticket.utils.TimeConverters;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -38,7 +38,7 @@ public class BungeePunishCommand extends Command {
                                 reason.append(args[i]).append(" ");
                             }
                             String modReason = reason.toString();
-                            int time = timeConverters.getDuration(args[1]);
+                            int time = TimeConverters.getDuration(args[1]);
 
                             new BungeePunishment(p, time, player, modReason);
                             BungeeHelper.broadcast(ChatColor.GRAY + "[" + ChatColor.GREEN + "Simple-Ticket" + ChatColor.GRAY + "] " + ChatColor.RESET + sender.getName() + ChatColor.GREEN + " ticket-blocked " + ChatColor.RESET + p.getName() + ChatColor.GREEN + " for " + args[1], TicketConstants.TICKET_STAFF_PERM);
@@ -49,7 +49,7 @@ public class BungeePunishCommand extends Command {
                             int time = SimpleTicketBungee.bungeeStatusController.DEFAULT_DURATION;
 
                             new BungeePunishment(p, time, player);
-                            BungeeHelper.broadcast(ChatColor.GRAY + "[" + ChatColor.GREEN + "Simple-Ticket" + ChatColor.GRAY + "] " + ChatColor.RESET + player.getName() + ChatColor.GREEN + " ticket-blocked " + ChatColor.RESET + p.getName() + ChatColor.GREEN + " for " + timeConverters.getStringDuration(SimpleTicketBungeeConfig.get().getInt("Default Duration")), TicketConstants.TICKET_STAFF_PERM);
+                            BungeeHelper.broadcast(ChatColor.GRAY + "[" + ChatColor.GREEN + "Simple-Ticket" + ChatColor.GRAY + "] " + ChatColor.RESET + player.getName() + ChatColor.GREEN + " ticket-blocked " + ChatColor.RESET + p.getName() + ChatColor.GREEN + " for " + TimeConverters.getStringDuration(SimpleTicketBungeeConfig.get().getInt("Default Duration")), TicketConstants.TICKET_STAFF_PERM);
                         }
 
                     } else {

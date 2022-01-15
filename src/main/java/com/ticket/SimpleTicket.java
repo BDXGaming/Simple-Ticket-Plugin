@@ -4,7 +4,7 @@ import com.ticket.commands.*;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.StatusController;
 import com.ticket.files.TicketConstants;
-import com.ticket.handlers.bungeeChannelListener;
+import com.ticket.handlers.BungeeChannelListener;
 import com.ticket.punishment.Punishment;
 import com.ticket.punishment.PunishmentDatabase;
 import com.ticket.tabcomplete.SimpleTicketPunishCommandTabComplete;
@@ -66,7 +66,7 @@ public class SimpleTicket extends JavaPlugin {
 
         //Register Plugin message channels
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, TicketConstants.BUNGEE_CHANNEL);
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, TicketConstants.BUNGEE_CHANNEL, new bungeeChannelListener());
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, TicketConstants.BUNGEE_CHANNEL, new BungeeChannelListener());
 
         //All the commands are assigned executors here
         getCommand("ticket").setExecutor(tic);

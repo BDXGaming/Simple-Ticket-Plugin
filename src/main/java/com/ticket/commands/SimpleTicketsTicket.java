@@ -1,11 +1,11 @@
 package com.ticket.commands;
 
-import com.ticket.events.ticketClaimEvent;
-import com.ticket.events.ticketCloseEvent;
+import com.ticket.events.TicketClaimEvent;
+import com.ticket.events.TicketCloseEvent;
 import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
-import com.ticket.utils.chat;
-import com.ticket.utils.playerName;
+import com.ticket.utils.ChatHelper;
+import com.ticket.utils.PlayerNameHelper;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -56,17 +56,17 @@ public class SimpleTicketsTicket implements CommandExecutor {
                                 assert t != null;
                                 if (!(t.isClaimed())) {
 
-                                    ticketClaimEvent event = new ticketClaimEvent(t,player);
+                                    TicketClaimEvent event = new TicketClaimEvent(t,player);
                                     Bukkit.getPluginManager().callEvent(event);
 
                                     if(!event.isCancelled()){
                                         t.claimTicket(player);
-                                        chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE + player.getName() + ChatColor.GREEN+" claimed Ticket-"+ t.getNum());
+                                        ChatHelper.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE + player.getName() + ChatColor.GREEN+" claimed Ticket-"+ t.getNum());
                                     }
 
                                     return true;
                                 } else {
-                                    player.sendMessage("§cThis ticket is already claimed by: " + playerName.getPlayerName(t.getStaffClaimer()));
+                                    player.sendMessage("§cThis ticket is already claimed by: " + PlayerNameHelper.getPlayerName(t.getStaffClaimer()));
                                     return true;
                                 }
                             } else {
@@ -79,7 +79,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         else if (args[0].equalsIgnoreCase("close")) {
                             Ticket t = Ticket.getTicket(args[1]);
 
-                            ticketCloseEvent event = new ticketCloseEvent(t, player);
+                            TicketCloseEvent event = new TicketCloseEvent(t, player);
                             Bukkit.getPluginManager().callEvent(event);
 
                             if(!event.isCancelled()){
@@ -106,7 +106,7 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         else if (Ticket.hasClaim(player)) {
                             try {
                                 Ticket t = Ticket.getClaim(player);
-                                StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + playerName.getPlayerName(player) + "§a):§d ");
+                                StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + PlayerNameHelper.getPlayerName(player) + "§a):§d ");
                                 for (int i = 0; i < args.length; i++) {
                                     msg.append(args[i]).append(" ");
                                 }
@@ -121,12 +121,12 @@ public class SimpleTicketsTicket implements CommandExecutor {
                         }
                         else if(Ticket.hasTicket(player)){
                             Ticket t = Ticket.getTicket(player);
-                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a (" + playerName.getPlayerName(player) + "§a):§d ");
+                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "]§a (" + PlayerNameHelper.getPlayerName(player) + "§a):§d ");
                             for (int i = 0; i < args.length; i++) {
                                 msg.append(args[i]).append(" ");
                             }
                             if (!(t.isClaimed())) {
-                                chat.broadcast(msg.toString());
+                                ChatHelper.broadcast(msg.toString());
                                 t.addmsg(msg.toString());
                                 return true;
                             } else {
@@ -150,13 +150,13 @@ public class SimpleTicketsTicket implements CommandExecutor {
                     try {
                         if (Ticket.hasTicket(player)) {
                             Ticket t = Ticket.getTicket(player);
-                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + playerName.getPlayerName(player) + "§a):§d ");
+                            StringBuilder msg = new StringBuilder("§c[Ticket-" + t.getNum() + "] §a(" + PlayerNameHelper.getPlayerName(player) + "§a):§d ");
                             for (int i = 0; i < args.length; i++) {
                                 msg.append(args[i]).append(" ");
                             }
                             if (!(t.isClaimed())) {
                                 player.sendMessage(msg.toString());
-                                chat.broadcast(msg.toString());
+                                ChatHelper.broadcast(msg.toString());
                                 t.addmsg(msg.toString());
                                 return true;
                             } else {

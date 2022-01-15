@@ -4,8 +4,8 @@ import com.ticket.events.PunishEvent;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
-import com.ticket.utils.chat;
-import com.ticket.utils.timeConverters;
+import com.ticket.utils.ChatHelper;
+import com.ticket.utils.TimeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -33,8 +33,8 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
                                 reason.append(args[i]).append(" ");
                             }
                             String modReason = reason.toString();
-                            int time = timeConverters.getDuration(args[1]);
-                            PunishEvent event = new PunishEvent(p, player, reason.toString(), timeConverters.getDuration(args[1]));
+                            int time = TimeConverters.getDuration(args[1]);
+                            PunishEvent event = new PunishEvent(p, player, reason.toString(), TimeConverters.getDuration(args[1]));
                             Bukkit.getPluginManager().callEvent(event);
 
                             if(!event.isCancelled()){
@@ -48,7 +48,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
 
                                 new Punishment(p, time, player, modReason);
                                 Punishment.sendPunishmentSync();
-                                chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1]);
+                                ChatHelper.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" ticket-blocked " +ChatColor.RESET+p.getName() + ChatColor.GREEN + " for " + args[1]);
                             }
 
 
@@ -68,7 +68,7 @@ public class SimpleTicketPunishCommand implements CommandExecutor {
 
                                 new Punishment(p, time, player);
                                 Punishment.sendPunishmentSync();
-                                chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + player.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ timeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")));
+                                ChatHelper.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET + player.getName() + ChatColor.GREEN+" ticket-blocked "+ChatColor.RESET+p.getName() + ChatColor.GREEN + " for "+ TimeConverters.getStringDuration(SimpleTicketConfig.get().getInt("Default Duration")));
                             }
 
 

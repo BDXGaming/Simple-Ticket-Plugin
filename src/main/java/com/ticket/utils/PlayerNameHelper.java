@@ -4,7 +4,7 @@ import com.ticket.SimpleTicket;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class playerName {
+public class PlayerNameHelper {
 
     public static String getPlayerName(Player p){
 

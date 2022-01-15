@@ -1,17 +1,12 @@
 package com.ticket.tabcomplete;
 
 import com.ticket.SimpleTicket;
-import com.ticket.files.SimpleTicketConfig;
-import com.ticket.files.StatusController;
-import com.ticket.utils.playerList;
-import org.bukkit.Bukkit;
+import com.ticket.utils.PlayerList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class SimpleTicketPunishCommandTabComplete implements TabCompleter {
@@ -21,7 +16,7 @@ public class SimpleTicketPunishCommandTabComplete implements TabCompleter {
         ArrayList<String> tab = new ArrayList<>();
 
         if(args.length ==1){
-            tab.addAll(playerList.getOnlinePlayers());
+            tab.addAll(PlayerList.getOnlinePlayers());
             return tab;
         }
 

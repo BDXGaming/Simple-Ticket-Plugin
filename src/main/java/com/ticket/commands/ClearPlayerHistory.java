@@ -1,6 +1,6 @@
 package com.ticket.commands;
 
-import com.ticket.events.clearPunishmentHistEvent;
+import com.ticket.events.ClearPunishmentHistEvent;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.PunishmentDatabase;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ public class ClearPlayerHistory implements CommandExecutor {
             if(args.length >0){
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
                 PunishmentDatabase.clearPlayerHistory(p.getUniqueId());
-                clearPunishmentHistEvent event = new clearPunishmentHistEvent(p, (Player) sender);
+                ClearPunishmentHistEvent event = new ClearPunishmentHistEvent(p, (Player) sender);
                 Bukkit.getPluginManager().callEvent(event);
                 if(!event.isCancelled()){
                     sender.sendMessage(ChatColor.GREEN + "Ticket Hist Cleared for: " + ChatColor.WHITE + p.getName());

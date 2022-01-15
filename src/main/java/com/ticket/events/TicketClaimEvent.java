@@ -1,21 +1,22 @@
 package com.ticket.events;
 
-import com.ticket.files.Ticket;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import com.ticket.files.Ticket;
 
-public class ticketCreateEvent extends Event implements Cancellable {
+public class TicketClaimEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean isCancelled = false;
     private Ticket ticket;
-    private Player player;
+    private Player claimer;
 
-    public ticketCreateEvent(Ticket ticket, Player player){
+    public TicketClaimEvent(Ticket ticket, Player claimer){
         this.ticket = ticket;
-        this.player = player;
+        this.claimer = claimer;
     }
+
 
     @Override
     public boolean isCancelled() {
@@ -36,8 +37,8 @@ public class ticketCreateEvent extends Event implements Cancellable {
         return HANDLERS;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Player getClaimer() {
+        return claimer;
     }
 
     public Ticket getTicket() {

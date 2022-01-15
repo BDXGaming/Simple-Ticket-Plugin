@@ -3,7 +3,7 @@ package com.ticket.commands;
 import com.ticket.events.RemovePunishmentEvent;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
-import com.ticket.utils.chat;
+import com.ticket.utils.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -11,8 +11,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.TimerTask;
 
 public class RemovePunishment implements CommandExecutor {
 
@@ -37,7 +35,7 @@ public class RemovePunishment implements CommandExecutor {
                         if(!event.isCancelled()){
                             Punishment.removePunishedPlayer(p);
                             player.sendMessage(ChatColor.GREEN+p.getName()+ChatColor.GREEN+" is now able to open tickets!");
-                            chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName());
+                            ChatHelper.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.RESET+ sender.getName() + ChatColor.GREEN+" un-ticket-blocked " +ChatColor.RESET+p.getName());
                             Punishment.sendPunishmentSync();
                         }
 

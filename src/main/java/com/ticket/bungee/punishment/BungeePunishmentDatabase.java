@@ -3,7 +3,7 @@ package com.ticket.bungee.punishment;
 import com.ticket.SimpleTicketBungee;
 import com.ticket.bungee.files.TicketPlayer;
 import com.ticket.utils.LoggerControl;
-import com.ticket.utils.timeConverters;
+import com.ticket.utils.TimeConverters;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -20,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.UUID;
 
 public class BungeePunishmentDatabase {
@@ -327,7 +326,7 @@ public class BungeePunishmentDatabase {
                     do{
                         String res;
                         res = ChatColor.GREEN + "Name: " + ChatColor.WHITE + rs.getString("username") + ChatColor.GREEN
-                                + "\nDuration: " + ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) + ChatColor.GREEN
+                                + "\nDuration: " + ChatColor.WHITE + TimeConverters.getStringDuration(rs.getInt("duration")) + ChatColor.GREEN
                                 + "\nStaff: " + ChatColor.WHITE + rs.getString("staffName") + ChatColor.GREEN
                                 + "\nPunished: " + ChatColor.WHITE + LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ChatColor.GREEN
                                 + "\nReason: " + ChatColor.WHITE + rs.getString("reason");

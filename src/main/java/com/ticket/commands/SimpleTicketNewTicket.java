@@ -1,12 +1,11 @@
 package com.ticket.commands;
 
-import com.ticket.events.ticketCreateEvent;
+import com.ticket.events.TicketCreateEvent;
 import com.ticket.files.SimpleTicketConfig;
 import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
 import com.ticket.punishment.Punishment;
-import com.ticket.punishment.PunishmentDatabase;
-import com.ticket.utils.chat;
+import com.ticket.utils.ChatHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,11 +36,11 @@ public class SimpleTicketNewTicket implements CommandExecutor {
                     if (!(Ticket.hasTicket(player))) {
 
                         Ticket t = new Ticket(player);
-                        ticketCreateEvent event = new ticketCreateEvent(t, player);
+                        TicketCreateEvent event = new TicketCreateEvent(t, player);
 
                         if(!event.isCancelled()){
                             player.sendMessage(Objects.requireNonNull(SimpleTicketConfig.get().getString("FirstMessage")));
-                            chat.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE+player.getName() +ChatColor.GREEN+ " Opened Ticket-" + t.getNum());
+                            ChatHelper.broadcast(ChatColor.GRAY+"["+ChatColor.GREEN+"Simple-Ticket"+ChatColor.GRAY + "] " +ChatColor.WHITE+player.getName() +ChatColor.GREEN+ " Opened Ticket-" + t.getNum());
                         }
 
                         return true;

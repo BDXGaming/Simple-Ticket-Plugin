@@ -3,6 +3,7 @@ package com.ticket;
 import com.ticket.bungee.commands.*;
 import com.ticket.bungee.config.BungeeStatusController;
 import com.ticket.bungee.config.SimpleTicketBungeeConfig;
+import com.ticket.bungee.handlers.BungeeTabCompleteEvent;
 import com.ticket.bungee.punishment.BungeePunishment;
 import com.ticket.bungee.punishment.BungeePunishmentDatabase;
 import com.ticket.utils.LoggerControl;

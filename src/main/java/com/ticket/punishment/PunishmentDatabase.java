@@ -1,9 +1,8 @@
 package com.ticket.punishment;
 
 import com.ticket.SimpleTicket;
-import com.ticket.files.SimpleTicketConfig;
 import com.ticket.utils.LoggerControl;
-import com.ticket.utils.timeConverters;
+import com.ticket.utils.TimeConverters;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -302,7 +301,7 @@ public class PunishmentDatabase {
                         do{
                             String res;
                             res = ChatColor.GREEN + "Name: " + ChatColor.WHITE + rs.getString("username") + ChatColor.GREEN
-                                    + "\nDuration: " + ChatColor.WHITE + timeConverters.getStringDuration(rs.getInt("duration")) + ChatColor.GREEN
+                                    + "\nDuration: " + ChatColor.WHITE + TimeConverters.getStringDuration(rs.getInt("duration")) + ChatColor.GREEN
                                     + "\nStaff: " + ChatColor.WHITE + rs.getString("staffName") + ChatColor.GREEN
                                     + "\nPunished: " + ChatColor.WHITE + LocalDateTime.parse(rs.getString("time")).minusSeconds(rs.getInt("duration")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ChatColor.GREEN
                                     + "\nReason: " + ChatColor.WHITE + rs.getString("reason");

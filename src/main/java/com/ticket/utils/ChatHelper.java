@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class chat {
+public class ChatHelper {
 
     public static void broadcast(String message) {
         Bukkit.broadcast(message, TicketConstants.TICKET_STAFF_PERM);

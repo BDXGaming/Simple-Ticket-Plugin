@@ -1,6 +1,6 @@
 package com.ticket.utils;
 
-public class timeConverters {
+public class TimeConverters {
 
     /**
      * Converts the given string duration to a second-based integer
