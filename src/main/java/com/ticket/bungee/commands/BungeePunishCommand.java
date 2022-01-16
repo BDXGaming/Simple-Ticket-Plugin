@@ -5,16 +5,17 @@ import com.ticket.bungee.config.SimpleTicketBungeeConfig;
 import com.ticket.bungee.files.TicketPlayer;
 import com.ticket.bungee.punishment.BungeePunishment;
 import com.ticket.files.TicketConstants;
-import com.ticket.utils.BungeeHelper;
-import com.ticket.utils.MojangPlayerHelper;
-import com.ticket.utils.TimeConverters;
+import com.ticket.utils.*;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
-public class BungeePunishCommand extends Command {
+import java.util.ArrayList;
+
+public class BungeePunishCommand extends Command implements TabExecutor {
 
     public BungeePunishCommand() {
         super("tpunish", "", "tban", "tblock");
@@ -63,6 +64,40 @@ public class BungeePunishCommand extends Command {
             }
         }
     }
+
+    @Override
+    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
+
+        ArrayList<String> tab = new ArrayList<>();
+
+        if(args.length ==1){
+            tab.addAll(OnlinePlayersHelper.getOnlinePlayerNames());
+            return tab;
+        }
+
+        if(args.length == 2){
+            if (!args[1].equals("")) {
+                for (String dur : SimpleTicketBungee.bungeeStatusController.SUGGESTED_DURATIONS) {
+                    if (dur.startsWith(args[1].toLowerCase())) {
+                        tab.add(dur);
+                    }
+                }
+            }
+            else{
+                tab.addAll(SimpleTicketBungee.bungeeStatusController.SUGGESTED_DURATIONS);
+            }
+            return tab;
+        }
+
+        else if(args.length ==3){
+            tab.add(SimpleTicketBungee.bungeeStatusController.SUGGESTED_REASON);
+            return tab;
+        }
+
+        return tab;
+
+    }
+
 }
 
 

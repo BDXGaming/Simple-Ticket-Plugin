@@ -3,17 +3,20 @@ package com.ticket.bungee.commands;
 import com.ticket.bungee.punishment.BungeePunishmentDatabase;
 import com.ticket.files.TicketConstants;
 import com.ticket.utils.MojangPlayerHelper;
+import com.ticket.utils.OnlinePlayersHelper;
+import com.ticket.utils.TabCompleteHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.api.scheduler.GroupedThreadFactory;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 
-public class ClearPlayerHistory extends Command {
+public class ClearPlayerHistory extends Command implements TabExecutor {
 
     public ClearPlayerHistory() {
         super("cleartickethist","", "thistclear", "clearhist");
@@ -37,6 +40,18 @@ public class ClearPlayerHistory extends Command {
 
             }
         }
+    }
+
+    @Override
+    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
+
+        ArrayList<String> completions = new ArrayList<>();
+
+        if(sender.hasPermission(TicketConstants.TICKET_STAFF_PERM)){
+            return TabCompleteHelper.copyPartialMatches(args[0], OnlinePlayersHelper.getOnlinePlayerNames(), completions);
+        }
+
+        return completions;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.ticket.bungee.commands;
 
 import com.ticket.bungee.files.BungeeTicket;
+import com.ticket.files.Ticket;
 import com.ticket.files.TicketConstants;
 import com.ticket.utils.BungeeHelper;
 import com.ticket.utils.LoggerControl;
@@ -10,9 +11,12 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import java.util.ArrayList;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
-public class BungeeTicketCommand extends Command {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class BungeeTicketCommand extends Command implements TabExecutor {
 
     public BungeeTicketCommand() {
         super("ticket", "", "tr");
@@ -142,5 +146,38 @@ public class BungeeTicketCommand extends Command {
             }
         }
 
+    }
+
+    @Override
+    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
+
+        final String[] subcommands = {"claim", "close", "history"};
+        ArrayList<String> tab = new ArrayList<>();
+        if(sender.hasPermission("ticket.ticket.staff")) {
+            if (args.length == 1) {
+                if (!args[0].equals("")) {
+                    for (String scmd : subcommands) {
+                        if (scmd.startsWith(args[0].toLowerCase())) {
+                            tab.add(scmd);
+                        }
+                    }
+                } else {
+                    tab.addAll(Arrays.asList(subcommands));
+                }
+                return tab;
+            }
+
+            if (args.length == 2) {
+
+                if ((args[0].equalsIgnoreCase("claim"))|| args[0].equalsIgnoreCase("close") || args[0].equalsIgnoreCase("history") || args[0].equalsIgnoreCase("hist")){
+                    for (BungeeTicket ticket : BungeeTicket.getTickets()) {
+                        tab.add(ticket.getNum().toString());
+                    }
+                }
+                return tab;
+            }
+        }
+
+        return tab;
     }
 }
