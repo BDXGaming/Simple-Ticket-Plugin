@@ -35,7 +35,7 @@ public class PunishmentDatabase {
             LoggerControl.warning(e.toString());
         }
 
-        if(SimpleTicket.statusController.sqlDataBaseType.equalsIgnoreCase("sqlite")){
+        if(SimpleTicket.statusController.sqlDataBaseType.equalsIgnoreCase("sqlite") || SimpleTicket.statusController.sqlDataBaseType.equalsIgnoreCase("local")){
             File dir = Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Simple-Ticket")).getDataFolder();
 
             location = "jdbc:sqlite:" + dir.toString() + "\\SimpleTicket.db";
