@@ -29,6 +29,7 @@ public class BungeeNewTicket extends Command {
             sender.sendMessage(new TextComponent("Only Players can use this command"));
         }
 
+        assert sender instanceof ProxiedPlayer;
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         if (player.hasPermission(TicketConstants.TICKET_PERM)) {
